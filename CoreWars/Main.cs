@@ -3,9 +3,9 @@ using Gtk;
 
 namespace CoreWars
 {
-
 	class MainClass
 	{
+
 		public static void Main (string[] args)
 		{
 			Application.Init ();
