@@ -10,11 +10,14 @@ using System.Windows.Forms;
 
 namespace CoreWars
 {
-    public partial class GUI : Form
-    {
-        public GUI()
-        {
-            InitializeComponent();
-        }
-    }
+	namespace GUI
+	{
+	    public partial class GUI : Form
+	    {
+	        public GUI()
+	        {
+	            InitializeComponent();
+	        }
+	    }
+	}
 }
