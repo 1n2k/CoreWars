@@ -15,19 +15,21 @@ namespace CoreWars
             /// <summary>
             /// The living cores owned by the player.
             /// </summary>
-            Queue<Core> cores = new Queue<Core>();
+            Queue<Core> Cores = new Queue<Core>();
 
             /// <summary>
             /// The players RedCode.
             /// </summary>
-            public readonly List<Cell> code = new List<Cell>();
+            public readonly List<Cell> Code = new List<Cell>();
             /// <summary>
             /// Gets the name.
             /// </summary>
             /// <value>
             /// The name.
             /// </value>
-            public string name { get; private set; }
+            public string Name { get; private set; }
+
+            public int CoreCount { get; private set; }
 
             /// <summary>
             /// Initializes a new instance of the <see cref="CoreWars.Player"/> class.
@@ -40,8 +42,9 @@ namespace CoreWars
             /// </param>
             public Player(string name, List<Cell> code)
             {
-                this.name = name;
-                this.code = code;
+                this.Name = name;
+                this.Code = code;
+                this.CoreCount = 0;
             }
 
             /// <summary>
@@ -50,9 +53,10 @@ namespace CoreWars
             /// <param name='position'>
             /// Position of the new core.
             /// </param>
-            public void startCore(int position)
+            public void StartCore(int position)
             {
-                this.cores.Enqueue(new Core(this, position));
+                this.Cores.Enqueue(new Core(this, position));
+                this.CoreCount++;
             }
 
             /// <summary>
@@ -61,9 +65,10 @@ namespace CoreWars
             /// <returns>
             /// The next core.
             /// </returns>
-            public Core getNextCore()
+            public Core GetNextCore()
             {
-                Core c = this.cores.Dequeue();
+                Core c = this.Cores.Dequeue();
+                CoreCount--;
                 return c;
             }
 
@@ -73,10 +78,11 @@ namespace CoreWars
             /// <param name='core'>
             /// The core.
             /// </param>
-            public void setLastCore(Core core)
+            public void SetLastCore(Core core)
             {
-                Debug.Assert(core.owner == this);
-                this.cores.Enqueue(core);
+                Debug.Assert(core.Owner == this);
+                CoreCount++;
+                this.Cores.Enqueue(core);
             }
         }
     }
