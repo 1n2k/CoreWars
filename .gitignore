@@ -1,2 +1,5 @@
 *.exe
+*.suo
+*.txt
 CoreWars/bin/
+CoreWars/obj/
