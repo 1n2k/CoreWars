@@ -40,6 +40,8 @@ namespace CoreWars
 			Game game = Game.game;
 			switch (game[this.position].opcode) {
 				//opcodes here
+			case "JMP":
+
 			case "NOP":
 			default:
 				break;
