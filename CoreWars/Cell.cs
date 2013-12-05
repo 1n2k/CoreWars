@@ -32,7 +32,7 @@ namespace CoreWars
 
                 public static bool IsValidSpecifier(char specifier)
                 {
-                    return specifier == '\0' || specifier == '#' || specifier == '@' || specifier == '<';
+                    return specifier == '$' || specifier == '#' || specifier == '@' || specifier == '<';
                 }
             }
 
@@ -47,7 +47,7 @@ namespace CoreWars
             public Cell()
             {
                 Operation = "DAT";
-                Arguments = new Argument[] { new Argument('\0', 0), new Argument('\0', 0) };
+                Arguments = new Argument[] { new Argument('$', 0), new Argument('$', 0) };
             }
             public Cell(string operation, Argument argument0, Argument argument1, params Argument[] arguments)
             {

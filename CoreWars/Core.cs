@@ -46,15 +46,34 @@ namespace CoreWars
                 if (game[this.Position].Arguments[0].Specifier == '@')
                     AField = (this.Position + game[AField].Arguments[1].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
                 else if (game[this.Position].Arguments[0].Specifier == '<')
-                        AField = (this.Position + game[AField].Arguments[1].Value + Settings.MEMORYSIZE - 1) % Settings.MEMORYSIZE;
+                    AField = (this.Position + --game[AField].Arguments[1].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
+                //'94Std:
+                else if (game[this.Position].Arguments[0].Specifier == '{')
+                    AField = (this.Position + --game[AField].Arguments[0].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
+                else if (game[this.Position].Arguments[0].Specifier == '>')
+                    AField = (this.Position + game[AField].Arguments[1].Value++ + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
+                else if (game[this.Position].Arguments[0].Specifier == '}')
+                    AField = (this.Position + game[AField].Arguments[0].Value++ + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
+
+                else if (game[this.Position].Arguments[0].Specifier == '*')
+                    AField = (this.Position + game[AField].Arguments[0].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
 
                 //Normalise B-Field
                 int BField = (this.Position + game[this.Position].Arguments[1].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
                 if (game[this.Position].Arguments[1].Specifier == '@')
                     BField = (this.Position + game[BField].Arguments[1].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
                 else if (game[this.Position].Arguments[1].Specifier == '<')
-                    BField = (this.Position + game[BField].Arguments[1].Value + Settings.MEMORYSIZE - 1) % Settings.MEMORYSIZE;
+                    BField = (this.Position + --game[BField].Arguments[1].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
+                //'94Std:
+                else if (game[this.Position].Arguments[0].Specifier == '{')
+                    BField = (this.Position + --game[BField].Arguments[0].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
+                else if (game[this.Position].Arguments[0].Specifier == '>')
+                    BField = (this.Position + game[BField].Arguments[1].Value++ + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
+                else if (game[this.Position].Arguments[0].Specifier == '}')
+                    BField = (this.Position + game[BField].Arguments[0].Value++ + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
 
+                else if (game[this.Position].Arguments[0].Specifier == '*')
+                    BField = (this.Position + game[BField].Arguments[0].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
 
 
                 switch (game[this.Position].Operation)
@@ -124,7 +143,7 @@ namespace CoreWars
                                 this.Position = AField;
                         return true;
                     case "SPL":
-                        if (game[this.Position].Arguments[0].Specifier != '\0')
+                        if (game[this.Position].Arguments[0].Specifier != '$')
                         {
                             this.Owner.StartCore(game[AField].Arguments[0].Value);
                             if (this.Owner.CoreCount == Settings.MAXCORESPERPLAYER)
