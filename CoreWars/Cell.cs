@@ -24,10 +24,18 @@ namespace CoreWars
 
                 public Argument(char specifier, int value)
                 {
+                    if (!IsValidSpecifier(specifier))
+                        throw new InvalidOperationException();
                     Specifier = specifier;
                     Value = value;
                 }
+
+                public static bool IsValidSpecifier(char specifier)
+                {
+                    return specifier == '\0' || specifier == '#' || specifier == '@' || specifier == '<';
+                }
             }
+
             /// <summary>
             /// Gets the first argument.
             /// </summary>

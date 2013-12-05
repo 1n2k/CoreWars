@@ -40,49 +40,93 @@ namespace CoreWars
             public bool RunActualCell()
             {
                 Game game = Game.GetGame;
+
+                //Normalise A-Field
+                int AField = (this.Position + game[this.Position].Arguments[0].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
+                if (game[this.Position].Arguments[0].Specifier == '@')
+                    AField = (this.Position + game[AField].Arguments[1].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
+                else if (game[this.Position].Arguments[0].Specifier == '<')
+                        AField = (this.Position + game[AField].Arguments[1].Value + Settings.MEMORYSIZE - 1) % Settings.MEMORYSIZE;
+
+                //Normalise B-Field
+                int BField = (this.Position + game[this.Position].Arguments[1].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
+                if (game[this.Position].Arguments[1].Specifier == '@')
+                    BField = (this.Position + game[BField].Arguments[1].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
+                else if (game[this.Position].Arguments[1].Specifier == '<')
+                    BField = (this.Position + game[BField].Arguments[1].Value + Settings.MEMORYSIZE - 1) % Settings.MEMORYSIZE;
+
+
+
                 switch (game[this.Position].Operation)
                 {
                     //opcodes here
                     case "DAT":
                         return false;
                     case "MOV":
-                        game[(this.Position + game[this.Position].Arguments[0].Value) % Settings.MEMORYSIZE] = game[this.Position];
+                        if (game[this.Position].Arguments[0].Specifier == '#')
+                            game[BField].Arguments[1] = game[this.Position].Arguments[0];
+                        else
+                            game[BField] = game[AField];
                         break;
                     case "ADD":
-                        if (game[this.Position].Arguments[1].Specifier == '#' && game[this.Position].Arguments[0].Specifier == '#')
-                            game[this.Position].Arguments[1].Value += game[this.Position].Arguments[0].Value;
+                        if (game[this.Position].Arguments[0].Specifier == '#')
+                            game[BField].Arguments[1].Value += game[this.Position].Arguments[0].Value;
+                        else
+                            foreach (int i in new[] { 0, 1 })
+                                game[BField].Arguments[i].Value += game[AField].Arguments[i].Value;
                         break;
                     case "SUB":
-                        if (game[this.Position].Arguments[1].Specifier == '#' && game[this.Position].Arguments[0].Specifier == '#')
-                            game[this.Position].Arguments[1].Value -= game[this.Position].Arguments[0].Value;
+                        if (game[this.Position].Arguments[0].Specifier == '#')
+                            game[BField].Arguments[1].Value -= game[this.Position].Arguments[0].Value;
+                        else
+                            foreach (int i in new[] { 0, 1 })
+                                game[BField].Arguments[i].Value -= game[AField].Arguments[i].Value;
                         break;
                     case "JMP":
-                        this.Position = (this.Position + game[this.Position].Arguments[0].Value) % Settings.MEMORYSIZE;
+                        this.Position = AField;
                         return true;
                     case "JMZ":
-                        if (game[this.Position].Arguments[1].Value == 0)
-                            this.Position = (this.Position + game[this.Position].Arguments[0].Value) % Settings.MEMORYSIZE;
+                        if (game[BField].Arguments[1].Value == 0)
+                            this.Position = AField;
                         return true;
                     case "JMN":
-                        if (game[this.Position].Arguments[1].Value != 0)
-                            this.Position = (this.Position + game[this.Position].Arguments[0].Value) % Settings.MEMORYSIZE;
+                        if (game[BField].Arguments[1].Value != 0)
+                            this.Position = AField;
                         return true;
                     case "CMP":
-                        if (game[this.Position].Arguments[1].Value == game[this.Position].Arguments[0].Value)
-                            this.Position++;
+                        if (game[this.Position].Arguments[0].Specifier == '#')
+                        {
+                            if (game[BField].Arguments[1].Value == game[this.Position].Arguments[0].Value)
+                                this.Position++;
+                        }
+                        else
+                            if (game[BField] == game[AField])
+                                this.Position++;
                         break;
                     case "SLT":
-                        if (game[this.Position].Arguments[1].Value > game[this.Position].Arguments[0].Value)
-                            this.Position++;
+                        if (game[this.Position].Arguments[0].Specifier == '#')
+                        {
+                            if (game[BField].Arguments[1].Value > game[this.Position].Arguments[0].Value)
+                                this.Position++;
+                        }
+                        else
+                            if (game[BField].Arguments[1].Value > game[AField].Arguments[1].Value)
+                                this.Position++;
                         break;
                     case "DJN":
-                        if (--game[this.Position].Arguments[1].Value != 0)
-                            this.Position = (this.Position + game[this.Position].Arguments[0].Value) % Settings.MEMORYSIZE;
+                        if (game[this.Position].Arguments[1].Specifier == '#')
+                        {
+                            if (game[this.Position].Arguments[1].Value > 1)
+                                this.Position = AField;
+                        }
+                        else
+                            if (game[BField].Arguments[1].Value > 1)
+                                this.Position = AField;
                         return true;
                     case "SPL":
-                        if (game[this.Position].Arguments[0].Specifier == '\0')
+                        if (game[this.Position].Arguments[0].Specifier != '\0')
                         {
-                            this.Owner.StartCore(game[this.Position].Arguments[0].Value);
+                            this.Owner.StartCore(game[AField].Arguments[0].Value);
                             if (this.Owner.CoreCount == Settings.MAXCORESPERPLAYER)
                                 return false;
                         }

@@ -8,11 +8,24 @@ namespace CoreWars
         public delegate void MemoryCellChangedEventHandler(object sender, MemoryCellChangedEventArgs e);
         public class MemoryCellChangedEventArgs : EventArgs
         {
-            public int CellIndex;
+            public readonly int CellIndex;
 
-            public MemoryCellChangedEventArgs(int cellIndex)
+            internal MemoryCellChangedEventArgs(int cellIndex)
             {
                 this.CellIndex = cellIndex;
+            }
+        }
+
+        public delegate void TurnStartedEventHandler(object sender, TurnStartedEventArgs e);
+        public class TurnStartedEventArgs : EventArgs
+        {
+            public readonly Player ActualPlayer;
+            public readonly int Round;
+
+            internal TurnStartedEventArgs(Player player, int round)
+            {
+                this.Round = round;
+                this.ActualPlayer = player;
             }
         }
 
@@ -21,6 +34,7 @@ namespace CoreWars
         /// </summary>
         public class Game
         {
+            #region Fields
             /// <summary>
             /// The lazy instance of the Game.
             /// </summary>
@@ -43,12 +57,24 @@ namespace CoreWars
             /// </summary>
             private List<Cell> Memory = new List<Cell>();
 
+            public int TurnCount { get; private set; }
+            #endregion
+
+            #region Events
             public event MemoryCellChangedEventHandler MemoryCellChanged;
             protected virtual void OnMemoryCellChange(MemoryCellChangedEventArgs e)
             {
                 if (this.MemoryCellChanged != null)
                     this.MemoryCellChanged(this, e);
             }
+
+            public event TurnStartedEventHandler TurnStarted;
+            protected virtual void OnTurnStart(TurnStartedEventArgs e)
+            {
+                if (this.TurnStarted != null)
+                    this.TurnStarted(this, e);
+            }
+            #endregion
 
             /// <summary>
             /// Initialize the game.
@@ -82,6 +108,9 @@ namespace CoreWars
             {
                 Player nextPlayer = Players[0];
                 Players.RemoveAt(0);
+
+                TurnStarted(this, new TurnStartedEventArgs(nextPlayer, ++this.TurnCount));
+
                 Core nextCore = nextPlayer.GetNextCore();
                 if (!nextCore.RunActualCell() && nextPlayer.CoreCount == 0) //Actual Players's last Core died.
                     return false;
