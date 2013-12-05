@@ -58,6 +58,15 @@ namespace CoreWars
                 for (int i = 0; i < arguments.Length; i++)
                     Arguments[2 + i] = arguments[i];
             }
+
+            public override string ToString()
+            {
+                string s =  "( " + this.Operation;
+                foreach (var item in Arguments)
+                    s += " | " + item.Specifier + item.Value;
+                s += " )";
+                return s;
+            }
         }
     }
 }

@@ -51,7 +51,7 @@ namespace CoreWars
             /// <summary>
             /// The players participating.
             /// </summary>
-            private List<Player> Players;
+            private List<Player> Players = new List<Player>();
             /// <summary>
             /// The memory operating on.
             /// </summary>
@@ -101,6 +101,7 @@ namespace CoreWars
                         this.Memory[offset + j] = this.Players[i].Code[j]; //Copy over player's code
                         OnMemoryCellChange(new MemoryCellChangedEventArgs(offset + j));
                     }
+                    this.Players[i].StartCore(offset);
                 }
             }
 
