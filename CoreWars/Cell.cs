@@ -25,7 +25,7 @@ namespace CoreWars
                 public Argument(char specifier, int value)
                 {
                     if (!IsValidSpecifier(specifier))
-                        throw new InvalidOperationException();
+                        throw new InvalidOperationException("Invalid Specifier");
                     Specifier = specifier;
                     Value = value;
                 }

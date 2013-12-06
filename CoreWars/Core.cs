@@ -146,25 +146,53 @@ namespace CoreWars
                         if (game[this.Position].Arguments[0].Specifier != '#')
                         {
                             if (this.Owner.CoreCount < Settings.MAXCORESPERPLAYER - 1)
-                                this.Owner.StartCore(game[AField].Arguments[0].Value);
+                            {
+                                this.Owner.StartCore(this.Position + 1);
+                                this.Position = game[AField].Arguments[0].Value;
+                                return true;
+                            }
                         }
                         break;
                     case "NOP":
                         break;
 
                     //'94:
-                    //case "MUL":
-                    //    if (game[this.Position].Arguments[1].Specifier == '\0' && game[this.Position].Arguments[0].Specifier == '\0')
-                    //        game[this.Position].Arguments[1].Value *= game[this.Position].Arguments[0].Value;
-                    //    break;
-                    //case "DIV":
-                    //    if (game[this.Position].Arguments[1].Specifier == '\0' && game[this.Position].Arguments[0].Specifier == '\0')
-                    //        game[this.Position].Arguments[1].Value /= game[this.Position].Arguments[0].Value;
-                    //    break;
-                    //case "MOD":
-                    //    if (game[this.Position].Arguments[1].Specifier == '\0' && game[this.Position].Arguments[0].Specifier == '\0')
-                    //        game[this.Position].Arguments[1].Value %= game[this.Position].Arguments[0].Value;
-                    //    break;
+
+                    case "MUL":
+                        if (game[this.Position].Arguments[0].Specifier == '#')
+                            game[BField].Arguments[1].Value *= game[this.Position].Arguments[0].Value;
+                        else
+                            foreach (int i in new[] { 0, 1 })
+                                game[BField].Arguments[i].Value *= game[AField].Arguments[i].Value;
+                        break;
+                    case "DIV":
+                        try
+                        {
+                            if (game[this.Position].Arguments[0].Specifier == '#')
+                                game[BField].Arguments[1].Value /= game[this.Position].Arguments[0].Value;
+                            else
+                                foreach (int i in new[] { 0, 1 })
+                                    game[BField].Arguments[i].Value /= game[AField].Arguments[i].Value;
+                        }
+                        catch (DivideByZeroException)
+                        {
+                            return false;
+                        }
+                        break;
+                    case "MOD":
+                        try
+                        {
+                            if (game[this.Position].Arguments[0].Specifier == '#')
+                                game[BField].Arguments[1].Value %= game[this.Position].Arguments[0].Value;
+                            else
+                                foreach (int i in new[] { 0, 1 })
+                                    game[BField].Arguments[i].Value %= game[AField].Arguments[i].Value;
+                        }
+                        catch (DivideByZeroException)
+                        {
+                            return false;
+                        }
+                        break;
 
                     default:
                         break;

@@ -44,7 +44,7 @@
     <Reference Include="System.Windows.Forms.DataVisualization.Design" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeConverter.cs" />
+    <Compile Include="Compiler.cs" />
     <Compile Include="GUI.cs">
       <SubType>Form</SubType>
     </Compile>
