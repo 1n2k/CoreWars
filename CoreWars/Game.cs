@@ -16,6 +16,7 @@ namespace CoreWars
             }
         }
 
+        public delegate void GameStartedEventHandler(object sender, TurnStartedEventArgs e);
         public delegate void TurnStartedEventHandler(object sender, TurnStartedEventArgs e);
         public class TurnStartedEventArgs : EventArgs
         {
@@ -28,6 +29,19 @@ namespace CoreWars
                 this.ActualPlayer = player;
             }
         }
+
+        public delegate void PlayerDiedEventHandler(object sender, ObjectDiedEventArgs<Player> e);
+        public delegate void CoreDiedEventHandler(object sender, ObjectDiedEventArgs<Core> e);
+        public class ObjectDiedEventArgs<T> : EventArgs
+        {
+            public readonly T Object;
+
+            internal ObjectDiedEventArgs(T dyingObject)
+            {
+                this.Object = dyingObject;
+            }
+        }
+
 
         /// <summary>
         /// The single game.
@@ -58,6 +72,8 @@ namespace CoreWars
             private List<Cell> Memory = new List<Cell>();
 
             public int TurnCount { get; private set; }
+
+            public bool NewStandard { get; private set; }
             #endregion
 
             #region Events
@@ -74,6 +90,27 @@ namespace CoreWars
                 if (this.TurnStarted != null)
                     this.TurnStarted(this, e);
             }
+
+            public event GameStartedEventHandler GameStarted;
+            protected virtual void OnGameStart(TurnStartedEventArgs e)
+            {
+                if (this.GameStarted != null)
+                    this.GameStarted(this, e);
+            }
+
+            public event PlayerDiedEventHandler PlayerDied;
+            protected virtual void OnPlayerDead(ObjectDiedEventArgs<Player> e)
+            {
+                if (this.PlayerDied != null)
+                    this.PlayerDied(this, e);
+            }
+            public event CoreDiedEventHandler CoreDied;
+            protected virtual void OnCoreDead(ObjectDiedEventArgs<Core> e)
+            {
+                if (this.CoreDied != null)
+                    this.CoreDied(this, e);
+            }
+
             #endregion
 
             /// <summary>
@@ -82,10 +119,11 @@ namespace CoreWars
             /// <param name='players'>
             /// Players participating.
             /// </param>
-            public void Initialize(List<Player> players)
+            public void Initialize(List<Player> players, bool newStandard = false)
             {
                 this.Memory.Clear();
                 this.Players.Clear();
+                this.NewStandard = newStandard;
 
                 this.Players = players;
                 for (int i = 0; i < Settings.MEMORYSIZE; i++)
@@ -107,14 +145,26 @@ namespace CoreWars
 
             public bool SimulateNextStep()
             {
+                if (Players.Count == 0)
+                    return false;
                 Player nextPlayer = Players[0];
                 Players.RemoveAt(0);
 
-                TurnStarted(this, new TurnStartedEventArgs(nextPlayer, ++this.TurnCount));
+                if (this.TurnCount == 0)
+                    OnGameStart(new TurnStartedEventArgs(nextPlayer, 1));
+                OnTurnStart(new TurnStartedEventArgs(nextPlayer, ++this.TurnCount));
 
                 Core nextCore = nextPlayer.GetNextCore();
-                if (!nextCore.RunActualCell() && nextPlayer.CoreCount == 0) //Actual Players's last Core died.
-                    return false;
+
+                if (!nextCore.RunActualCell())
+                {
+                    OnCoreDead(new ObjectDiedEventArgs<Core>(nextCore));
+                    if (nextPlayer.CoreCount == 0)//Actual Players's last Core died.
+                    {
+                        OnPlayerDead(new ObjectDiedEventArgs<Player>(nextPlayer));
+                        return true;
+                    }
+                }
                 nextPlayer.SetLastCore(nextCore);
                 Players.Add(nextPlayer);
                 return true;

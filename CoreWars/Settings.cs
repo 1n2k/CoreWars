@@ -12,9 +12,14 @@ namespace CoreWars
             /// <summary>
             /// The MEMORYSIZE of a game.
             /// </summary>
-            public static int MEMORYSIZE = 1000;
+            public static int MEMORYSIZE = 8000;
 
             public static int MAXCORESPERPLAYER = 100;
+
+            public static int MAXLENGTH = 100;
+
+            public static int MAXCYCLES = 100000;
+
 
             /// <summary>
             /// Gets the initial position for a player's code.
