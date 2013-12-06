@@ -30,9 +30,18 @@
 	        /// </summary>
 	        private void InitializeComponent()
 	        {
-	            this.components = new System.ComponentModel.Container();
-	            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-	            this.Text = "Form1";
+                this.SuspendLayout();
+                // 
+                // GUI
+                // 
+                this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+                this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+                this.ClientSize = new System.Drawing.Size(292, 273);
+                this.Name = "GUI";
+                this.Text = "Form1";
+                this.Load += new System.EventHandler(this.GUI_Load);
+                this.ResumeLayout(false);
+
 	        }
 
 	        #endregion

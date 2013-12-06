@@ -18,6 +18,11 @@ namespace CoreWars
 	        {
 	            InitializeComponent();
 	        }
+
+            private void GUI_Load(object sender, EventArgs e)
+            {
+                Engine.Game.GetGame.Initialize(null);
+            }
 	    }
 	}
 }
