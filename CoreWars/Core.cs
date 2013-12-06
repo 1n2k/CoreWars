@@ -143,11 +143,10 @@ namespace CoreWars
                                 this.Position = AField;
                         return true;
                     case "SPL":
-                        if (game[this.Position].Arguments[0].Specifier != '$')
+                        if (game[this.Position].Arguments[0].Specifier != '#')
                         {
-                            this.Owner.StartCore(game[AField].Arguments[0].Value);
-                            if (this.Owner.CoreCount == Settings.MAXCORESPERPLAYER)
-                                return false;
+                            if (this.Owner.CoreCount < Settings.MAXCORESPERPLAYER - 1)
+                                this.Owner.StartCore(game[AField].Arguments[0].Value);
                         }
                         break;
                     case "NOP":
@@ -170,7 +169,7 @@ namespace CoreWars
                     default:
                         break;
                 }
-                this.Position++;
+                this.Position = (this.Position + 1) % Settings.MAXCORESPERPLAYER;
                 return true;
             }
         }
