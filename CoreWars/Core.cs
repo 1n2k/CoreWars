@@ -17,7 +17,7 @@ namespace CoreWars
             private int Position;
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="CoreWars.Core"/> class.
+            /// Initializes a new instance of the <see cref="CoreWars.Engine.Core"/> class.
             /// </summary>
             /// <param name='player'>
             /// The owning player.

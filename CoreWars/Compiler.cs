@@ -10,11 +10,30 @@ namespace CoreWars
     {
         class Compiler
         {
+			///The standards
             public enum Standard
             {
+				/// <summary>
+				/// The '88 Standard.
+				/// </summary>
                 _88 = 0,
+				/// <summary>
+				/// The '94 standard.
+				/// </summary>
                 _94 = 1
             }
+			/// <summary>
+			/// Parses the code file.
+			/// </summary>
+			/// <returns>
+			/// The parsed code file.
+			/// </returns>
+			/// <param name='path'>
+			/// The Path.
+			/// </param>
+			/// <param name='standard'>
+			/// The Standard.
+			/// </param>
             public static Engine.Player ParseCodeFile(string path, Standard standard)
             {
                 string playername = "< Kein Name >";

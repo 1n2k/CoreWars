@@ -29,10 +29,16 @@ namespace CoreWars
             /// </value>
             public string Name { get; private set; }
 
+			/// <summary>
+			/// Gets the core count.
+			/// </summary>
+			/// <value>
+			/// The core count.
+			/// </value>
             public int CoreCount { get; private set; }
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="CoreWars.Player"/> class.
+            /// Initializes a new instance of the <see cref="CoreWars.Engine.Player"/> class.
             /// </summary>
             /// <param name='name'>
             /// The player's name.
