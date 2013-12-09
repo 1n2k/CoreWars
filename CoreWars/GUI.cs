@@ -12,6 +12,7 @@ namespace CoreWars
 {
 	namespace GUI
 	{
+		//Toll, nicht?
 		public partial class GUI : Form
 		{			
 			bool pausiert = false;
