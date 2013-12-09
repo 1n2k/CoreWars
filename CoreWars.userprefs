@@ -1,0 +1,28 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="CoreWars/Core.cs">
+    <Files>
+      <File FileName="CoreWars/Core.cs" Line="19" Column="13" />
+      <File FileName="CoreWars/Player.cs" Line="40" Column="13" />
+      <File FileName="CoreWars/Game.cs" Line="276" Column="61" />
+      <File FileName="CoreWars/Cell.cs" Line="27" Column="68" />
+      <File FileName="CoreWars/Settings.cs" Line="27" Column="4" />
+      <File FileName="CoreWars/GUI.cs" Line="22" Column="25" />
+      <File FileName="CoreWars/Compiler.cs" Line="57" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="CoreWars" expanded="True">
+            <Node name="Core.cs" selected="True" />
+            <Node name="GUI.cs" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

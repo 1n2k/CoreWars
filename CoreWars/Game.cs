@@ -249,9 +249,6 @@ namespace CoreWars
             {
                 if (Players.Count == 0)
                     return false;
-				if(this.TurnCount > Settings.MAXCYCLES)
-					return false;
-
                 Player nextPlayer = Players[0];
                 Players.RemoveAt(0);
 

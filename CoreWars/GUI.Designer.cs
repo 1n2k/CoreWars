@@ -47,7 +47,7 @@
                 this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
                 this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
                 this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
-                this.timer1 = new System.Windows.Forms.Timer(this.components);
+                this.timer = new Multimedia.Timer();
                 this.button8 = new System.Windows.Forms.Button();
                 ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
                 this.statusStrip1.SuspendLayout();
@@ -127,6 +127,7 @@
                 this.trackBar1.AccessibleName = "";
                 this.trackBar1.Location = new System.Drawing.Point(257, 208);
                 this.trackBar1.Minimum = 1;
+                this.trackBar1.Maximum = 1000;
                 this.trackBar1.Name = "trackBar1";
                 this.trackBar1.Orientation = System.Windows.Forms.Orientation.Vertical;
                 this.trackBar1.Size = new System.Drawing.Size(34, 140);
@@ -198,9 +199,9 @@
                 this.toolStripStatusLabel3.Size = new System.Drawing.Size(107, 13);
                 this.toolStripStatusLabel3.Text = "toolStripStatusLabel1";
                 // 
-                // timer1
+                // timer
                 // 
-                this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+                this.timer.Tick += new System.EventHandler(timer_Tick);
                 // 
                 // button8
                 // 
@@ -259,8 +260,8 @@
             private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
             private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
             private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
-            private System.Windows.Forms.Timer timer1;
             private System.Windows.Forms.Button button8;
+            private Multimedia.Timer timer;
         }
     }
 }
