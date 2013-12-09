@@ -2,7 +2,7 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
   <MonoDevelop.Ide.Workbench ActiveDocument="CoreWars/Core.cs">
     <Files>
-      <File FileName="CoreWars/Core.cs" Line="19" Column="13" />
+      <File FileName="CoreWars/Core.cs" Line="348" Column="76" />
       <File FileName="CoreWars/Player.cs" Line="40" Column="13" />
       <File FileName="CoreWars/Game.cs" Line="276" Column="61" />
       <File FileName="CoreWars/Cell.cs" Line="27" Column="68" />
