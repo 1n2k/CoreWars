@@ -14,19 +14,19 @@ namespace CoreWars
             /// </summary>
             public static int MEMORYSIZE = 8000;
 
-			/// <summary>
-			/// The MAXCORESPERPLAYER.
-			/// </summary>
+            /// <summary>
+            /// The MAXCORESPERPLAYER.
+            /// </summary>
             public static int MAXCORESPERPLAYER = 100;
 
-			/// <summary>
-			/// The MAXLENGTH.
-			/// </summary>
+            /// <summary>
+            /// The MAXLENGTH.
+            /// </summary>
             public static int MAXLENGTH = 100;
 
-			/// <summary>
-			/// The MAXCYCLES.
-			/// </summary>
+            /// <summary>
+            /// The MAXCYCLES.
+            /// </summary>
             public static int MAXCYCLES = 100000;
 
 

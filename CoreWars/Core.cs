@@ -90,33 +90,33 @@ namespace CoreWars
                             else
                                 game[BField] = game[AField];
                         }
-						else if(game[this.Position].Modifier == "A" || game[this.Position].Modifier == "F"){						
+                        else if(game[this.Position].Modifier == "A" || game[this.Position].Modifier == "F"){						
                             if (game[this.Position].Arguments[0].Specifier == '#')
                                 game[BField].Arguments[0] = game[this.Position].Arguments[0];
                             else
                                 game[BField].Arguments[0] = game[AField].Arguments[0];
-						}
-						else if(game[this.Position].Modifier == "B" || game[this.Position].Modifier == "F"){					
+                        }
+                        else if(game[this.Position].Modifier == "B" || game[this.Position].Modifier == "F"){					
                             if (game[this.Position].Arguments[1].Specifier == '#')
                                 game[BField].Arguments[1] = game[this.Position].Arguments[1];
                             else
                                 game[BField].Arguments[1] = game[AField].Arguments[1];
-						}
-						else if(game[this.Position].Modifier == "AB" || game[this.Position].Modifier == "X"){											
+                        }
+                        else if(game[this.Position].Modifier == "AB" || game[this.Position].Modifier == "X"){											
                             if (game[this.Position].Arguments[0].Specifier == '#')
                                 game[BField].Arguments[1] = game[this.Position].Arguments[0];
                             else
                                 game[BField].Arguments[1] = game[AField].Arguments[0];
-						}
-						else if(game[this.Position].Modifier == "BA" || game[this.Position].Modifier == "X"){					
+                        }
+                        else if(game[this.Position].Modifier == "BA" || game[this.Position].Modifier == "X"){					
                             if (game[this.Position].Arguments[1].Specifier == '#')
                                 game[BField].Arguments[0] = game[this.Position].Arguments[1];
                             else
                                 game[BField].Arguments[0] = game[AField].Arguments[1];
-						}
-						else if(game[this.Position].Modifier == "I"){
-							game[BField] = game[AField];
-						}
+                        }
+                        else if(game[this.Position].Modifier == "I"){
+                            game[BField] = game[AField];
+                        }
                         break;
                     case "ADD":
                         if (game[this.Position].Modifier == "")
@@ -127,7 +127,7 @@ namespace CoreWars
                                 foreach (int i in new[] { 0, 1 })
                                     game[BField].Arguments[i].Value += game[AField].Arguments[i].Value;
                         }						
-						break;
+                        break;
                     case "SUB":
                         if (game[this.Position].Modifier == "")
                         {
@@ -138,29 +138,29 @@ namespace CoreWars
                                     game[BField].Arguments[i].Value -= game[AField].Arguments[i].Value;
                         } break;
                     case "JMP":
-						this.Position = AField;
-						return true;
+                        this.Position = AField;
+                        return true;
                     case "JMZ":
                         if (game[this.Position].Modifier == "" || game[this.Position].Modifier == "B" || game[this.Position].Modifier == "AB")
                         {
                             if (game[BField].Arguments[1].Value == 0){
                                 this.Position = AField;
-								return true;
-							}
+                                return true;
+                            }
                         }
-						else if (game[this.Position].Modifier == "A" || game[this.Position].Modifier == "BA")
+                        else if (game[this.Position].Modifier == "A" || game[this.Position].Modifier == "BA")
                         {
                             if (game[BField].Arguments[0].Value == 0){
                                 this.Position = AField;
-								return true;
-							}
+                                return true;
+                            }
                         }
-						else if (game[this.Position].Modifier == "F" || game[this.Position].Modifier == "X" || game[this.Position].Modifier == "I")
+                        else if (game[this.Position].Modifier == "F" || game[this.Position].Modifier == "X" || game[this.Position].Modifier == "I")
                         {
                             if (game[BField].Arguments[0].Value == 0 && game[BField].Arguments[1].Value == 0){
                                 this.Position = AField;
-								return true;
-							}
+                                return true;
+                            }
                         }
                         break;
                     case "JMN":
@@ -168,27 +168,27 @@ namespace CoreWars
                         {
                             if (game[BField].Arguments[1].Value != 0){
                                 this.Position = AField;
-								return true;
-							}
+                                return true;
+                            }
                         }
-						else if (game[this.Position].Modifier == "A" || game[this.Position].Modifier == "BA")
+                        else if (game[this.Position].Modifier == "A" || game[this.Position].Modifier == "BA")
                         {
                             if (game[BField].Arguments[0].Value != 0){
                                 this.Position = AField;
-								return true;
-							}
+                                return true;
+                            }
                         }
-						else if (game[this.Position].Modifier == "F" || game[this.Position].Modifier == "X" || game[this.Position].Modifier == "I")
+                        else if (game[this.Position].Modifier == "F" || game[this.Position].Modifier == "X" || game[this.Position].Modifier == "I")
                         {
                             if ((game[BField].Arguments[0].Value != 0) || (game[BField].Arguments[1].Value != 0)){
                                 this.Position = AField;
-								return true;
-							}
+                                return true;
+                            }
                         }
                         break;
                     case "CMP":
-						goto case "SEQ";
-					case "SEQ":
+                        goto case "SEQ";
+                    case "SEQ":
                         if (game[this.Position].Modifier == "")
                         {
                             if (game[this.Position].Arguments[0].Specifier == '#')
@@ -248,23 +248,23 @@ namespace CoreWars
                         {
                             if (game[this.Position].Arguments[0].Specifier != '#')
                                 if (game[BField].Arguments[0].Value == game[AField].Arguments[0].Value && 
-							    	game[BField].Arguments[1].Value == game[AField].Arguments[1].Value)
+                                    game[BField].Arguments[1].Value == game[AField].Arguments[1].Value)
                                     this.Position++;
                         }
                         else if (game[this.Position].Modifier == "X")
                         {
                             if (game[this.Position].Arguments[0].Specifier != '#')
                                 if (game[BField].Arguments[0].Value == game[AField].Arguments[1].Value && 
-							    	game[BField].Arguments[1].Value == game[AField].Arguments[0].Value)
+                                    game[BField].Arguments[1].Value == game[AField].Arguments[0].Value)
                                     this.Position++;
                         }
                         else if (game[this.Position].Modifier == "I")
                         {
-							if (game[BField] == game[AField])
-								this.Position++;
+                            if (game[BField] == game[AField])
+                                this.Position++;
                         }
                         break;
-					case "SNE":
+                    case "SNE":
                         if (game[this.Position].Modifier == "")
                         {
                             if (game[this.Position].Arguments[0].Specifier == '#')
@@ -324,23 +324,23 @@ namespace CoreWars
                         {
                             if (game[this.Position].Arguments[0].Specifier != '#')
                                 if (game[BField].Arguments[0].Value != game[AField].Arguments[0].Value || 
-							    	game[BField].Arguments[1].Value != game[AField].Arguments[1].Value)
+                                    game[BField].Arguments[1].Value != game[AField].Arguments[1].Value)
                                     this.Position++;
                         }
                         else if (game[this.Position].Modifier == "X")
                         {
                             if (game[this.Position].Arguments[0].Specifier != '#')
                                 if (game[BField].Arguments[0].Value != game[AField].Arguments[1].Value || 
-							    	game[BField].Arguments[1].Value != game[AField].Arguments[0].Value)
+                                    game[BField].Arguments[1].Value != game[AField].Arguments[0].Value)
                                     this.Position++;
                         }
                         else if (game[this.Position].Modifier == "I")
                         {
-							if (game[BField] != game[AField])
-								this.Position++;
+                            if (game[BField] != game[AField])
+                                this.Position++;
                         }
                         break;
-					case "SLT":
+                    case "SLT":
                         if (game[this.Position].Modifier == "")
                         {
                             if (game[this.Position].Arguments[0].Specifier == '#')
@@ -400,14 +400,14 @@ namespace CoreWars
                         {
                             if (game[this.Position].Arguments[0].Specifier != '#')
                                 if (game[BField].Arguments[0].Value > game[AField].Arguments[0].Value && 
-							    	game[BField].Arguments[1].Value > game[AField].Arguments[1].Value)
+                                    game[BField].Arguments[1].Value > game[AField].Arguments[1].Value)
                                     this.Position++;
                         }
                         else if (game[this.Position].Modifier == "X")
                         {
                             if (game[this.Position].Arguments[0].Specifier != '#')
                                 if (game[BField].Arguments[0].Value > game[AField].Arguments[1].Value && 
-							    	game[BField].Arguments[1].Value > game[AField].Arguments[0].Value)
+                                    game[BField].Arguments[1].Value > game[AField].Arguments[0].Value)
                                     this.Position++;
                         }
                         break;
@@ -416,26 +416,26 @@ namespace CoreWars
                         {
                             if (--game[BField].Arguments[1].Value != 0){
                                 this.Position = AField;
-								return true;
-							}
+                                return true;
+                            }
                         }
-						else if (game[this.Position].Modifier == "A" || game[this.Position].Modifier == "BA")
+                        else if (game[this.Position].Modifier == "A" || game[this.Position].Modifier == "BA")
                         {
                             if (--game[BField].Arguments[0].Value != 0){
                                 this.Position = AField;
-								return true;
-							}
+                                return true;
+                            }
                         }
-						else if (game[this.Position].Modifier == "F" || game[this.Position].Modifier == "X" || game[this.Position].Modifier == "I")
+                        else if (game[this.Position].Modifier == "F" || game[this.Position].Modifier == "X" || game[this.Position].Modifier == "I")
                         {
                             if ((--game[BField].Arguments[0].Value != 0) | (--game[BField].Arguments[1].Value != 0)){
                                 this.Position = AField;
-								return true;
-							}
+                                return true;
+                            }
                         }
                         return true;
                     case "SPL":
-						if (game[this.Position].Arguments[0].Specifier != '#'
+                        if (game[this.Position].Arguments[0].Specifier != '#'
                             && this.Owner.CoreCount < Settings.MAXCORESPERPLAYER - 1)
                         {
                             this.Owner.StartCore(this.Position + 1);

@@ -29,12 +29,12 @@ namespace CoreWars
             /// </value>
             public string Name { get; private set; }
 
-			/// <summary>
-			/// Gets the core count.
-			/// </summary>
-			/// <value>
-			/// The core count.
-			/// </value>
+            /// <summary>
+            /// Gets the core count.
+            /// </summary>
+            /// <value>
+            /// The core count.
+            /// </value>
             public int CoreCount { get; private set; }
 
             /// <summary>
