@@ -15,7 +15,7 @@ namespace CoreWars
             public static int MEMORYSIZE = 8000;
 
 			/// <summary>
-			/// The MAXCORESPERPLAYEr.
+			/// The MAXCORESPERPLAYER.
 			/// </summary>
             public static int MAXCORESPERPLAYER = 100;
 
