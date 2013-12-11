@@ -29,7 +29,8 @@ namespace CoreWars
             /// </summary>
             public static int MAXCYCLES = 100000;
 
-
+            public static int CODEDISTANCE = 100;
+            
             /// <summary>
             /// Gets the initial position for a player's code.
             /// </summary>
@@ -41,7 +42,7 @@ namespace CoreWars
             /// </param>
             public static int GetInitialPosition(int player)
             {
-                return (101 * player) % MEMORYSIZE;
+                return ((CODEDISTANCE + MAXLENGTH) * player) % MEMORYSIZE;
             }
         }
     }
