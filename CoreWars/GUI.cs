@@ -28,6 +28,7 @@ namespace CoreWars
 				toolStripProgressBar1.Maximum = Engine.Settings.MAXCYCLES;
 				toolStripStatusLabel1.Text = "0";
 				toolStripStatusLabel3.Text = ""+Engine.Settings.MAXCYCLES;
+                timer.Tick += new EventHandler(timer_Tick);
 				timer.Period = 1000 / trackBar1.Value;
 				pausiert = false;
 				button4.Enabled = true;
