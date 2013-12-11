@@ -47,6 +47,7 @@ namespace CoreWars
                         ac.TrimEnd(' ');
                         if (ac == "")
                             continue;
+                        ac.Replace('\t', ' ').Replace(", ", ",");
 
                         if (ac[0] == ';') // Is Comment
                         {
