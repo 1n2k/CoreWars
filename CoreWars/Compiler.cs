@@ -8,7 +8,7 @@ namespace CoreWars
 {
     namespace IO
     {
-        class Compiler
+        public class Compiler
         {
 			///The standards
             public enum Standard
@@ -43,11 +43,10 @@ namespace CoreWars
                     while (!sr.EndOfStream)
                     {
                         string ac = sr.ReadLine();
-                        ac.TrimStart(' ');
-                        ac.TrimEnd(' ');
+                        ac = ac.Replace('\t', ' ').Replace(", ", ",").TrimStart(' ').TrimEnd(' ');
+
                         if (ac == "")
                             continue;
-                        ac.Replace('\t', ' ').Replace(", ", ",");
 
                         if (ac[0] == ';') // Is Comment
                         {
@@ -76,18 +75,35 @@ namespace CoreWars
                         System.Diagnostics.Debug.Assert(ac[i] == ' ');
                         for (int o = 0; o < 2; ++o)
                         {
+                            if (i == ac.Length)
+                            {
+                                for (int u = o; u < 2; ++u)
+                                {
+                                    argument[u].Specifier = '#';
+                                    argument[u].Value = 0;
+                                }
+                                break;
+                            }
                             if (Engine.Cell.Argument.IsValidSpecifier(ac[++i], standard == Standard._94))
                                 argument[o].Specifier = ac[i];
                             else
+                            {
+                                argument[o].Specifier = '$';
                                 --i;
+                            }
 
                             int value = 0;
-                            while (++i < ac.Length && ac[i] != ',')
+                            int sgn = 1;
+                            if (ac[++i] == '-')
+                                sgn = -1;
+                            else
+                                --i;
+                            while (++i < ac.Length && ac[i] != ',' && Char.IsDigit(ac[i]))
                             {
                                 value *= 10;
                                 value += ac[i] - '0';
                             }
-                            argument[o].Value = value;
+                            argument[o].Value = (Engine.Settings.MEMORYSIZE+  sgn * value) % Engine.Settings.MEMORYSIZE;
 
                         }
 
