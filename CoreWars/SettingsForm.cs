@@ -19,6 +19,15 @@ namespace CoreWars
 			textBox2.Text = "" + Engine.Settings.MAXCORESPERPLAYER;
 			textBox3.Text = "" + Engine.Settings.MAXLENGTH;
 			textBox4.Text = "" + Engine.Settings.MAXCYCLES;
+            textBox5.Text = "" + Engine.Settings.CODEDISTANCE;
+            if (myGUI.neunundvierzig)
+            {
+                radioButton2.Checked = true;
+            }
+            else
+            {
+                radioButton1.Checked = true;
+            }
 		}
 		
 		void TextBox1TextChanged(object sender, EventArgs e)
@@ -50,7 +59,7 @@ namespace CoreWars
 				textBox3.Text = "" + Engine.Settings.MAXLENGTH;
 			}
 		}
-		
+        
 		void TextBox4TextChanged(object sender, EventArgs e)
 		{
 			try{
@@ -61,10 +70,41 @@ namespace CoreWars
 			}
 			
 		}
-		
+
+        private void TextBox5TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                Engine.Settings.CODEDISTANCE = Convert.ToInt32(textBox5.Text);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Die Eingabe hat das falsche Format!", "Falsches Format", MessageBoxButtons.OK);
+                textBox5.Text = "" + Engine.Settings.CODEDISTANCE;
+            }
+        }
+
 		void SettingsFormFormClosed(object sender, FormClosedEventArgs e)
 		{
 			myGUI.changedSettings();
 		}
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton1.Checked)
+            {
+                radioButton2.Checked = false;
+                myGUI.neunundvierzig = false;
+            }
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton2.Checked)
+            {
+                radioButton1.Checked = false;
+                myGUI.neunundvierzig = true;
+            }
+        }
 	}
 }

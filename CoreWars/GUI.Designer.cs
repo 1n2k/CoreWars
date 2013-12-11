@@ -30,7 +30,6 @@
             /// </summary>
             private void InitializeComponent()
             {
-                this.components = new System.ComponentModel.Container();
                 this.listBox1 = new System.Windows.Forms.ListBox();
                 this.button1 = new System.Windows.Forms.Button();
                 this.button2 = new System.Windows.Forms.Button();
@@ -47,8 +46,8 @@
                 this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
                 this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
                 this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
-                this.timer = new Multimedia.Timer();
                 this.button8 = new System.Windows.Forms.Button();
+                this.timer = new Multimedia.Timer();
                 ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
                 this.statusStrip1.SuspendLayout();
                 this.SuspendLayout();
@@ -126,8 +125,8 @@
                 this.trackBar1.AccessibleDescription = "";
                 this.trackBar1.AccessibleName = "";
                 this.trackBar1.Location = new System.Drawing.Point(257, 208);
-                this.trackBar1.Minimum = 1;
                 this.trackBar1.Maximum = 1000;
+                this.trackBar1.Minimum = 1;
                 this.trackBar1.Name = "trackBar1";
                 this.trackBar1.Orientation = System.Windows.Forms.Orientation.Vertical;
                 this.trackBar1.Size = new System.Drawing.Size(34, 140);
@@ -199,10 +198,6 @@
                 this.toolStripStatusLabel3.Size = new System.Drawing.Size(107, 13);
                 this.toolStripStatusLabel3.Text = "toolStripStatusLabel1";
                 // 
-                // timer
-                // 
-                this.timer.Tick += new System.EventHandler(timer_Tick);
-                // 
                 // button8
                 // 
                 this.button8.Location = new System.Drawing.Point(169, 202);
@@ -231,6 +226,9 @@
                 this.Controls.Add(this.button2);
                 this.Controls.Add(this.button1);
                 this.Controls.Add(this.listBox1);
+                this.MaximizeBox = false;
+                this.MaximumSize = new System.Drawing.Size(347, 400);
+                this.MinimumSize = new System.Drawing.Size(347, 400);
                 this.Name = "GUI";
                 this.Text = "Form1";
                 this.Load += new System.EventHandler(this.GUI_Load);

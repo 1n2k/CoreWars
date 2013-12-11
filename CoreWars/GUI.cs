@@ -12,10 +12,10 @@ namespace CoreWars
 {
 	namespace GUI
 	{
-		//Toll, nicht?
 		public partial class GUI : Form
 		{			
 			bool pausiert = false;
+            public bool neunundvierzig {get;set;}
 			List<Engine.Player> players = new List<Engine.Player>();
 
 			public GUI()
@@ -34,6 +34,7 @@ namespace CoreWars
 				button5.Enabled = false;
 				button6.Enabled = false;
 				button7.Enabled = false;
+                neunundvierzig = false;
 			}
 
 			private void button1_Click(object sender, EventArgs e) //Spieler bearbeiten
@@ -58,7 +59,7 @@ namespace CoreWars
 			private void button4_Click(object sender, EventArgs e) //Spiel starten
 			{
 				Engine.Game.GetGame.Initialize(players, false);
-				timer.Start();
+                timer.Start();
 				toolStripProgressBar1.Value = 0;
 				toolStripProgressBar1.Maximum = Engine.Settings.MAXCYCLES;
 				toolStripStatusLabel1.Text = "0";
@@ -123,15 +124,16 @@ namespace CoreWars
 				if (!pausiert)
 				{
 					timer.Stop();
+                    button6.Enabled = true;
 				}
 				else
 				{
 					timer.Start();
+                    button6.Enabled = false;
 				}
 				pausiert = !pausiert;
 				button4.Enabled = false;
 				button5.Enabled = true;
-				button6.Enabled = true;
 				button7.Enabled = true;
 			}
 			
