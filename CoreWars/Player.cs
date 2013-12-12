@@ -37,6 +37,8 @@ namespace CoreWars
             /// </value>
             public int CoreCount { get; private set; }
 
+            public int StartCoreIndex { get; private set; }
+
             /// <summary>
             /// Initializes a new instance of the <see cref="CoreWars.Engine.Player"/> class.
             /// </summary>
@@ -46,11 +48,12 @@ namespace CoreWars
             /// <param name='code'>
             /// The player's code.
             /// </param>
-            public Player(string name, List<Cell> code)
+            public Player(string name, List<Cell> code,int startCoreIndex = 0)
             {
                 this.Name = name;
                 this.Code = code;
                 this.CoreCount = 0;
+                this.StartCoreIndex = startCoreIndex;
             }
 
             /// <summary>

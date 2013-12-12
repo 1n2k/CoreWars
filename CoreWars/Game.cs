@@ -235,7 +235,7 @@ namespace CoreWars
                         this.Memory[offset + j] = this.Players[i].Code[j]; //Copy over player's code
                         OnMemoryCellChange(new MemoryCellChangedEventArgs(offset + j));
                     }
-                    this.Players[i].StartCore(offset);
+                    this.Players[i].StartCore((offset + this.Players[i].StartCoreIndex) % Settings.MEMORYSIZE);
                 }
             }
 
