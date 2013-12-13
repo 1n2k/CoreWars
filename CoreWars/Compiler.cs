@@ -69,7 +69,7 @@ namespace CoreWars
 
                     if (ac == "")
                         continue;
-                    if (ac.Contains(':') && ac.IndexOf(';') > ac.IndexOf(':'))
+                    if (ac.Contains(':') && (!ac.Contains(';') || (ac.IndexOf(';') > ac.IndexOf(':'))))
                         labels[ac.Split(':')[0]] = "" + linenum;
                 }
 
@@ -80,8 +80,8 @@ namespace CoreWars
 
                     if (ac == "")
                         continue;
-                    if (ac.Contains(':') && ac.IndexOf(';') > ac.IndexOf(':'))
-                        ac = ac.Split(':')[1];
+                    if (ac.Contains(':') && (!ac.Contains(';') || (ac.IndexOf(';') > ac.IndexOf(':'))))
+                        ac = ac.Split(':')[1].TrimStart(' ').TrimEnd(' ');
 
                     if (ac[0] == ';') // Is Comment
                     {
@@ -91,11 +91,15 @@ namespace CoreWars
                     }
 
                     foreach (string item in labels.Keys)
-                        ac.Replace(item, labels[item]);
+                        ac = ac.Replace(item, labels[item]);
+
+                    System.Diagnostics.Debug.WriteLine(ac);
 
                     foreach(char c in new []{'+','-','*','/'})
                         ac = Regex.Replace(ac, @"/([1-9][0-9]*)/\"+c+@"/([1-9][0-9]*)/", (Match M) =>
                             "" + op(c,Convert.ToInt32(M.Value.Split(c)[0]), Convert.ToInt32(M.Value.Split(c)[1])));
+                    
+                    System.Diagnostics.Debug.WriteLine(ac);
 
                     int i = 0; //Position im string
 
@@ -154,7 +158,7 @@ namespace CoreWars
                     {
                         startIndex = argument[0].Value;
                     }
-
+                    System.Diagnostics.Debug.WriteLine(new Engine.Cell(operation, argument[0], argument[1]).ToString());
                     code.Add(new Engine.Cell(operation, argument[0], argument[1]));
                 }
                 return new Engine.Player(playername, code, startIndex);

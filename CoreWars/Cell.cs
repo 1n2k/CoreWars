@@ -144,7 +144,7 @@ namespace CoreWars
             /// Arguments.
             /// </param>
             public Cell(string operation, string modifier, Argument argument0, Argument argument1, params Argument[] arguments)
-                : this(operation,argument0,argument1,arguments)
+                : this(operation, argument0, argument1, arguments)
             {
                 Modifier = modifier;
             }
@@ -157,10 +157,12 @@ namespace CoreWars
             /// </returns>
             public override string ToString()
             {
-                string s = "( " + this.Operation + "." + this.Modifier;
-                foreach (var item in Arguments)
-                    s += " | " + item.Specifier + item.Value;
-                s += " )";
+                string s = this.Operation + "." + this.Modifier + " ";
+                for (int i = 0; i < Arguments.Length; ++i)
+                    if (i != 0)
+                        s += ("; " + Arguments[i].Specifier) + Arguments[i].Value;
+                    else
+                        s += "" + Arguments[i].Specifier + Arguments[i].Value;
                 return s;
             }
         }
