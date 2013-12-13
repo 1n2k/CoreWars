@@ -157,7 +157,7 @@ namespace CoreWars
             /// </returns>
             public override string ToString()
             {
-                string s = this.Operation + "." + this.Modifier + " ";
+                string s = this.Operation + (this.Modifier != "" ? "." + this.Modifier + " " : " ");
                 for (int i = 0; i < Arguments.Length; ++i)
                     if (i != 0)
                         s += (", " + Arguments[i].Specifier) + Arguments[i].Value;

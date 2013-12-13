@@ -96,7 +96,7 @@ namespace CoreWars
                     System.Diagnostics.Debug.WriteLine(ac);
 
                     foreach(char c in new []{'+','-','*','/'})
-                        ac = Regex.Replace(ac, @"/([1-9][0-9]*)/\"+c+@"/([1-9][0-9]*)/", (Match M) =>
+                        ac = Regex.Replace(ac, @"[0-9]+\" + c + @"[0-9]+", (Match M) =>
                             "" + op(c,Convert.ToInt32(M.Value.Split(c)[0]), Convert.ToInt32(M.Value.Split(c)[1])));
                     
                     System.Diagnostics.Debug.WriteLine(ac);
