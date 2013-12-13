@@ -28,6 +28,11 @@ namespace CoreWars
             {
                 radioButton1.Checked = true;
             }
+            if (myGUI.players.Count != 0)
+            {
+                radioButton1.Enabled = false;
+                radioButton2.Enabled = false;
+            }
 		}
 		
 		void TextBox1TextChanged(object sender, EventArgs e)
@@ -87,6 +92,7 @@ namespace CoreWars
 		void SettingsFormFormClosed(object sender, FormClosedEventArgs e)
 		{
 			myGUI.changedSettings();
+            myGUI.Show();
 		}
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
