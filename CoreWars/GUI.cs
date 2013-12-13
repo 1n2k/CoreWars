@@ -25,6 +25,7 @@ namespace CoreWars
 
             private void GUI_Load(object sender, EventArgs e)
             {
+                Engine.Game.GetGame.PlayerDied += new Engine.PlayerDiedEventHandler(playerDied);
                 toolStripProgressBar1.Maximum = Engine.Settings.MAXCYCLES;
                 toolStripStatusLabel1.Text = "0";
                 toolStripStatusLabel3.Text = "" + Engine.Settings.MAXCYCLES;
@@ -37,6 +38,13 @@ namespace CoreWars
                 button7.Enabled = false;
                 neunundvierzig = false;
             }
+
+            public void playerDied(object sender, Engine.ObjectDiedEventArgs<Engine.Player> e)
+            {
+                MessageBox.Show("Der Spieler " + e.Object.Name + " ist gestorben.", "Spieler ist gestorben", MessageBoxButtons.OK);
+            }
+
+            #region Buttons
 
             private void button1_Click(object sender, EventArgs e) //Spieler bearbeiten
             {
@@ -79,7 +87,8 @@ namespace CoreWars
                 }
                 else
                 {
-                    Engine.Game.GetGame.Initialize(players, false);
+                    List<Engine.Player> tempPlayer = new List<Engine.Player>(players);
+                    Engine.Game.GetGame.Initialize(tempPlayer, false);
                     timer.Start();
                     toolStripProgressBar1.Value = 0;
                     toolStripProgressBar1.Maximum = Engine.Settings.MAXCYCLES;
@@ -128,6 +137,39 @@ namespace CoreWars
                 }
             }
 
+            private void button7_Click(object sender, EventArgs e) //Spiel pausieren
+            {
+                if (!pausiert)
+                {
+                    timer.Stop();
+                    button6.Enabled = true;
+                }
+                else
+                {
+                    timer.Start();
+                    button6.Enabled = false;
+                }
+                pausiert = !pausiert;
+                button4.Enabled = false;
+                button5.Enabled = true;
+                button7.Enabled = true;
+            }
+
+            private void button8_Click(object sender, EventArgs e) //Einstellungen öffnen
+            {
+                this.Hide();
+                timer.Stop();
+                button4.Enabled = true;
+                button5.Enabled = false;
+                button6.Enabled = false;
+                button7.Enabled = false;
+                pausiert = false;
+                SettingsForm settingsForm = new SettingsForm(this);
+                settingsForm.Show();
+            }
+
+            #endregion
+
             public void deletePlayer()
             {
                 players.RemoveAt(listBox1.SelectedIndex);
@@ -175,43 +217,12 @@ namespace CoreWars
                 }
             }
 
-            private void button7_Click(object sender, EventArgs e) //Spiel pausieren
-            {
-                if (!pausiert)
-                {
-                    timer.Stop();
-                    button6.Enabled = true;
-                }
-                else
-                {
-                    timer.Start();
-                    button6.Enabled = false;
-                }
-                pausiert = !pausiert;
-                button4.Enabled = false;
-                button5.Enabled = true;
-                button7.Enabled = true;
-            }
-
             public void changedSettings()
             {
                 toolStripProgressBar1.Value = 0;
                 toolStripProgressBar1.Maximum = Engine.Settings.MAXCYCLES;
                 toolStripStatusLabel1.Text = "0";
                 toolStripStatusLabel3.Text = "" + Engine.Settings.MAXCYCLES;
-            }
-
-            private void button8_Click(object sender, EventArgs e) //Einstellungen öffnen
-            {
-                this.Hide();
-                timer.Stop();
-                button4.Enabled = true;
-                button5.Enabled = false;
-                button6.Enabled = false;
-                button7.Enabled = false;
-                pausiert = false;
-                SettingsForm settingsForm = new SettingsForm(this);
-                settingsForm.Show();
             }
 
             private void trackBar1_Scroll(object sender, EventArgs e)
