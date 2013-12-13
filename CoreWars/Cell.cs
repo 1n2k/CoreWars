@@ -160,7 +160,7 @@ namespace CoreWars
                 string s = this.Operation + "." + this.Modifier + " ";
                 for (int i = 0; i < Arguments.Length; ++i)
                     if (i != 0)
-                        s += ("; " + Arguments[i].Specifier) + Arguments[i].Value;
+                        s += (", " + Arguments[i].Specifier) + Arguments[i].Value;
                     else
                         s += "" + Arguments[i].Specifier + Arguments[i].Value;
                 return s;
