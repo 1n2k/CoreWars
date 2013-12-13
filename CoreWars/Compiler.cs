@@ -11,6 +11,22 @@ namespace CoreWars
     {
         public class Compiler
         {
+            static int op(char c, int i1, int i2)
+            {
+                switch (c)
+                {
+                    case '+':
+                        return i1 + i2;
+                    case '-':
+                        return i1 - i2;
+                    case '*':
+                        return i1 * i2;
+                    case '/':
+                        return i1 / i2;
+                }
+                return 1;
+            }
+
             ///The standards
             public enum Standard
             {
@@ -40,7 +56,6 @@ namespace CoreWars
                 using (StreamReader sr = new StreamReader(path))
                     return Compiler.ParseCodeFile(sr.ReadToEnd().Split('\n'), standard);
             }
-
             public static Engine.Player ParseCodeFile(string[] file, Standard standard ,string playername = "< Kein Name >")
             {
                 int startIndex = 0;
@@ -78,8 +93,9 @@ namespace CoreWars
                     foreach (string item in labels.Keys)
                         ac.Replace(item, labels[item]);
 
-                    //ac = Regex.Replace(ac, "pattern", () => ());
-
+                    foreach(char c in new []{'+','-','*','/'})
+                        ac = Regex.Replace(ac, @"/([1-9][0-9]*)/\"+c+@"/([1-9][0-9]*)/", (Match M) =>
+                            "" + op(c,Convert.ToInt32(M.Value.Split(c)[0]), Convert.ToInt32(M.Value.Split(c)[1])));
 
                     int i = 0; //Position im string
 
