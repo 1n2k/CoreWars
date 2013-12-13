@@ -41,9 +41,8 @@ namespace CoreWars
                     return Compiler.ParseCodeFile(sr.ReadToEnd().Split('\n'), standard);
             }
 
-            public static Engine.Player ParseCodeFile(string[] file, Standard standard)
+            public static Engine.Player ParseCodeFile(string[] file, Standard standard ,string playername = "< Kein Name >")
             {
-                string playername = "< Kein Name >";
                 int startIndex = 0;
                 List<Engine.Cell> code = new List<Engine.Cell>();
                 Dictionary<string, string> labels = new Dictionary<string, string>();
