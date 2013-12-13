@@ -26,6 +26,7 @@ namespace CoreWars
             private void GUI_Load(object sender, EventArgs e)
             {
                 Engine.Game.GetGame.PlayerDied += new Engine.PlayerDiedEventHandler(playerDied);
+                Engine.Game.GetGame.MemoryCellChanged += new Engine.MemoryCellChangedEventHandler(memoryCellChanged);
                 toolStripProgressBar1.Maximum = Engine.Settings.MAXCYCLES;
                 toolStripStatusLabel1.Text = "0";
                 toolStripStatusLabel3.Text = "" + Engine.Settings.MAXCYCLES;
@@ -42,6 +43,12 @@ namespace CoreWars
             public void playerDied(object sender, Engine.ObjectDiedEventArgs<Engine.Player> e)
             {
                 MessageBox.Show("Der Spieler " + e.Object.Name + " ist gestorben.", "Spieler ist gestorben", MessageBoxButtons.OK);
+            }
+
+            public void memoryCellChanged(object sender, Engine.MemoryCellChangedEventArgs e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.CellIndex + "    "+ Engine.Game.GetGame[e.CellIndex].ToString());
+                Application.DoEvents();
             }
 
             #region Buttons
