@@ -33,6 +33,8 @@ namespace CoreWars
 
             /// <summary>
             /// Runs the cell the core is pointing at.
+            /// If the Cell's opcode does not contain a specifier, no conversion takes place;
+            /// instead the '88 standard's rules are being used to evaluate the expression.
             /// </summary>
             /// <returns>
             /// True if the core survived.
@@ -82,6 +84,7 @@ namespace CoreWars
                     //opcodes here
                     case "DAT":
                         return false;
+                    #region MOV
                     case "MOV":
                         if (game[this.Position].Modifier == "")
                         {
@@ -118,28 +121,11 @@ namespace CoreWars
                             game[BField] = game[AField];
                         }
                         break;
-                    case "ADD":
-                        if (game[this.Position].Modifier == "")
-                        {
-                            if (game[this.Position].Arguments[0].Specifier == '#')
-                                game[BField].Arguments[1].Value += game[this.Position].Arguments[0].Value;
-                            else
-                                foreach (int i in new[] { 0, 1 })
-                                    game[BField].Arguments[i].Value += game[AField].Arguments[i].Value;
-                        }						
-                        break;
-                    case "SUB":
-                        if (game[this.Position].Modifier == "")
-                        {
-                            if (game[this.Position].Arguments[0].Specifier == '#')
-                                game[BField].Arguments[1].Value -= game[this.Position].Arguments[0].Value;
-                            else
-                                foreach (int i in new[] { 0, 1 })
-                                    game[BField].Arguments[i].Value -= game[AField].Arguments[i].Value;
-                        } break;
+                    #endregion
                     case "JMP":
                         this.Position = AField;
                         return true;
+                    #region JMZ
                     case "JMZ":
                         if (game[this.Position].Modifier == "" || game[this.Position].Modifier == "B" || game[this.Position].Modifier == "AB")
                         {
@@ -163,6 +149,8 @@ namespace CoreWars
                             }
                         }
                         break;
+                    #endregion
+                    #region JMN
                     case "JMN":
                         if (game[this.Position].Modifier == "" || game[this.Position].Modifier == "B" || game[this.Position].Modifier == "AB")
                         {
@@ -186,6 +174,8 @@ namespace CoreWars
                             }
                         }
                         break;
+                    #endregion
+                    #region CMP / SEQ
                     case "CMP":
                         goto case "SEQ";
                     case "SEQ":
@@ -264,6 +254,8 @@ namespace CoreWars
                                 this.Position++;
                         }
                         break;
+                    #endregion
+                    #region SNE
                     case "SNE":
                         if (game[this.Position].Modifier == "")
                         {
@@ -340,6 +332,8 @@ namespace CoreWars
                                 this.Position++;
                         }
                         break;
+                    #endregion
+                    #region SLT
                     case "SLT":
                         if (game[this.Position].Modifier == "")
                         {
@@ -411,6 +405,8 @@ namespace CoreWars
                                     this.Position++;
                         }
                         break;
+                    #endregion
+                    #region DJN
                     case "DJN":
                         if (game[this.Position].Modifier == "" || game[this.Position].Modifier == "B" || game[this.Position].Modifier == "AB")
                         {
@@ -434,6 +430,8 @@ namespace CoreWars
                             }
                         }
                         return true;
+                    #endregion
+                    #region SPL
                     case "SPL":
                         if (game[this.Position].Arguments[0].Specifier != '#'
                             && this.Owner.CoreCount < Settings.MAXCORESPERPLAYER - 1)
@@ -443,40 +441,204 @@ namespace CoreWars
                             return true;
                         }
                         break;
+                    #endregion
                     case "NOP":
                         break;
 
                     //'94:
-
-                    case "MUL":
-                        if (game[this.Position].Arguments[0].Specifier == '#')
-                            game[BField].Arguments[1].Value *= game[this.Position].Arguments[0].Value;
-                        else
-                            foreach (int i in new[] { 0, 1 })
-                                game[BField].Arguments[i].Value *= game[AField].Arguments[i].Value;
+                    #region ADD
+                    case "ADD":
+                        if (game[this.Position].Modifier == "")
+                        {
+                            if (game[this.Position].Arguments[0].Specifier == '#')
+                                game[BField].Arguments[1].Value += game[this.Position].Arguments[0].Value;
+                            else
+                                foreach (int i in new[] { 0, 1 })
+                                    game[BField].Arguments[i].Value += game[AField].Arguments[i].Value;
+                        }
+                        if (game[this.Position].Modifier == "A" || game[this.Position].Modifier == "F")
+                        {
+                            if (game[this.Position].Arguments[0].Specifier == '#')
+                                game[BField].Arguments[0].Value += game[this.Position].Arguments[0].Value;
+                            else
+                                game[BField].Arguments[0].Value += game[AField].Arguments[0].Value;
+                        }
+                        if (game[this.Position].Modifier == "B" || game[this.Position].Modifier == "F")
+                        {
+                            if (game[this.Position].Arguments[1].Specifier == '#')
+                                game[BField].Arguments[1].Value += game[this.Position].Arguments[1].Value;
+                            else
+                                game[BField].Arguments[1].Value += game[AField].Arguments[1].Value;
+                        }
+                        if (game[this.Position].Modifier == "AB" || game[this.Position].Modifier == "X")
+                        {
+                            if (game[this.Position].Arguments[1].Specifier == '#')
+                                game[BField].Arguments[0].Value += game[this.Position].Arguments[1].Value;
+                            else
+                                game[BField].Arguments[0].Value += game[AField].Arguments[1].Value;
+                        }
+                        if (game[this.Position].Modifier == "BA" || game[this.Position].Modifier == "X")
+                        {
+                            if (game[this.Position].Arguments[0].Specifier == '#')
+                                game[BField].Arguments[1].Value += game[this.Position].Arguments[0].Value;
+                            else
+                                game[BField].Arguments[1].Value += game[AField].Arguments[0].Value;
+                        }
                         break;
+                    #endregion
+                    #region SUB
+                    case "SUB":
+                        if (game[this.Position].Modifier == "")
+                        {
+                            if (game[this.Position].Arguments[0].Specifier == '#')
+                                game[BField].Arguments[1].Value -= game[this.Position].Arguments[0].Value;
+                            else
+                                foreach (int i in new[] { 0, 1 })
+                                    game[BField].Arguments[i].Value -= game[AField].Arguments[i].Value;
+                        } 
+                        if (game[this.Position].Modifier == "A" || game[this.Position].Modifier == "F")
+                        {
+                            if (game[this.Position].Arguments[0].Specifier == '#')
+                                game[BField].Arguments[0].Value -= game[this.Position].Arguments[0].Value;
+                            else
+                                game[BField].Arguments[0].Value -= game[AField].Arguments[0].Value;
+                        }
+                        if (game[this.Position].Modifier == "B" || game[this.Position].Modifier == "F")
+                        {
+                            if (game[this.Position].Arguments[1].Specifier == '#')
+                                game[BField].Arguments[1].Value -= game[this.Position].Arguments[1].Value;
+                            else
+                                game[BField].Arguments[1].Value -= game[AField].Arguments[1].Value;
+                        }
+                        if (game[this.Position].Modifier == "AB" || game[this.Position].Modifier == "X")
+                        {
+                            if (game[this.Position].Arguments[1].Specifier == '#')
+                                game[BField].Arguments[0].Value -= game[this.Position].Arguments[1].Value;
+                            else
+                                game[BField].Arguments[0].Value -= game[AField].Arguments[1].Value;
+                        }
+                        if (game[this.Position].Modifier == "BA" || game[this.Position].Modifier == "X")
+                        {
+                            if (game[this.Position].Arguments[0].Specifier == '#')
+                                game[BField].Arguments[1].Value -= game[this.Position].Arguments[0].Value;
+                            else
+                                game[BField].Arguments[1].Value -= game[AField].Arguments[0].Value;
+                        }
+                        break;
+
+                    #endregion
+                    #region MUL
+                    case "MUL":
+                        if (game[this.Position].Modifier == "")
+                        {
+                            if (game[this.Position].Arguments[0].Specifier == '#')
+                                game[BField].Arguments[1].Value *= game[this.Position].Arguments[0].Value;
+                            else
+                                foreach (int i in new[] { 0, 1 })
+                                    game[BField].Arguments[i].Value *= game[AField].Arguments[i].Value;
+                        }
+                        if (game[this.Position].Modifier == "A" || game[this.Position].Modifier == "F")
+                        {
+                            if (game[this.Position].Arguments[0].Specifier == '#')
+                                game[BField].Arguments[0].Value *= game[this.Position].Arguments[0].Value;
+                            else
+                                game[BField].Arguments[0].Value *= game[AField].Arguments[0].Value;
+                        }
+                        if (game[this.Position].Modifier == "B" || game[this.Position].Modifier == "F")
+                        {
+                            if (game[this.Position].Arguments[1].Specifier == '#')
+                                game[BField].Arguments[1].Value *= game[this.Position].Arguments[1].Value;
+                            else
+                                game[BField].Arguments[1].Value *= game[AField].Arguments[1].Value;
+                        }
+                        if (game[this.Position].Modifier == "AB" || game[this.Position].Modifier == "X")
+                        {
+                            if (game[this.Position].Arguments[1].Specifier == '#')
+                                game[BField].Arguments[0].Value *= game[this.Position].Arguments[1].Value;
+                            else
+                                game[BField].Arguments[0].Value *= game[AField].Arguments[1].Value;
+                        }
+                        if (game[this.Position].Modifier == "BA" || game[this.Position].Modifier == "X")
+                        {
+                            if (game[this.Position].Arguments[0].Specifier == '#')
+                                game[BField].Arguments[1].Value *= game[this.Position].Arguments[0].Value;
+                            else
+                                game[BField].Arguments[1].Value *= game[AField].Arguments[0].Value;
+                        }
+                        break;
+
+                    #endregion
+                    #region DIV
                     case "DIV":
                         try
                         {
-                            if (game[this.Position].Arguments[0].Specifier == '#')
-                                game[BField].Arguments[1].Value /= game[this.Position].Arguments[0].Value;
-                            else
-                                foreach (int i in new[] { 0, 1 })
-                                    game[BField].Arguments[i].Value /= game[AField].Arguments[i].Value;
+                            if (game[this.Position].Modifier == "A" || game[this.Position].Modifier == "F")
+                            {
+                                if (game[this.Position].Arguments[0].Specifier == '#')
+                                    game[BField].Arguments[0].Value /= game[this.Position].Arguments[0].Value;
+                                else
+                                    game[BField].Arguments[0].Value /= game[AField].Arguments[0].Value;
+                            }
+                            if (game[this.Position].Modifier == "B" || game[this.Position].Modifier == "F")
+                            {
+                                if (game[this.Position].Arguments[1].Specifier == '#')
+                                    game[BField].Arguments[1].Value /= game[this.Position].Arguments[1].Value;
+                                else
+                                    game[BField].Arguments[1].Value /= game[AField].Arguments[1].Value;
+                            }
+                            if (game[this.Position].Modifier == "AB" || game[this.Position].Modifier == "X")
+                            {
+                                if (game[this.Position].Arguments[1].Specifier == '#')
+                                    game[BField].Arguments[0].Value /= game[this.Position].Arguments[1].Value;
+                                else
+                                    game[BField].Arguments[0].Value /= game[AField].Arguments[1].Value;
+                            }
+                            if (game[this.Position].Modifier == "BA" || game[this.Position].Modifier == "X")
+                            {
+                                if (game[this.Position].Arguments[0].Specifier == '#')
+                                    game[BField].Arguments[1].Value /= game[this.Position].Arguments[0].Value;
+                                else
+                                    game[BField].Arguments[1].Value /= game[AField].Arguments[0].Value;
+                            }
                         }
                         catch (DivideByZeroException)
                         {
                             return false;
                         }
                         break;
+                    #endregion
+                    #region MOD
                     case "MOD":
                         try
                         {
-                            if (game[this.Position].Arguments[0].Specifier == '#')
-                                game[BField].Arguments[1].Value %= game[this.Position].Arguments[0].Value;
-                            else
-                                foreach (int i in new[] { 0, 1 })
-                                    game[BField].Arguments[i].Value %= game[AField].Arguments[i].Value;
+                            if (game[this.Position].Modifier == "A" || game[this.Position].Modifier == "F")
+                            {
+                                if (game[this.Position].Arguments[0].Specifier == '#')
+                                    game[BField].Arguments[0].Value %= game[this.Position].Arguments[0].Value;
+                                else
+                                    game[BField].Arguments[0].Value %= game[AField].Arguments[0].Value;
+                            }
+                            if (game[this.Position].Modifier == "B" || game[this.Position].Modifier == "F")
+                            {
+                                if (game[this.Position].Arguments[1].Specifier == '#')
+                                    game[BField].Arguments[1].Value %= game[this.Position].Arguments[1].Value;
+                                else
+                                    game[BField].Arguments[1].Value %= game[AField].Arguments[1].Value;
+                            }
+                            if (game[this.Position].Modifier == "AB" || game[this.Position].Modifier == "X")
+                            {
+                                if (game[this.Position].Arguments[1].Specifier == '#')
+                                    game[BField].Arguments[0].Value %= game[this.Position].Arguments[1].Value;
+                                else
+                                    game[BField].Arguments[0].Value %= game[AField].Arguments[1].Value;
+                            }
+                            if (game[this.Position].Modifier == "BA" || game[this.Position].Modifier == "X")
+                            {
+                                if (game[this.Position].Arguments[0].Specifier == '#')
+                                    game[BField].Arguments[1].Value %= game[this.Position].Arguments[0].Value;
+                                else
+                                    game[BField].Arguments[1].Value %= game[AField].Arguments[0].Value;
+                            }
                         }
                         catch (DivideByZeroException)
                         {
@@ -484,6 +646,7 @@ namespace CoreWars
                         }
                         break;
 
+                    #endregion
                     default:
                         break;
                 }
