@@ -53,7 +53,6 @@ namespace CoreWars
                     MessageBox.Show(ex.Message, "Es ist ein Fehler aufgetreten", MessageBoxButtons.OK);
                 }
             }
-            myGUI.Show();
         }
 
         private void button1_Click(object sender, EventArgs e)

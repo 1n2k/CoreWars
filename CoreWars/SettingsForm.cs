@@ -92,7 +92,6 @@ namespace CoreWars
 		void SettingsFormFormClosed(object sender, FormClosedEventArgs e)
 		{
 			myGUI.changedSettings();
-            myGUI.Show();
 		}
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)

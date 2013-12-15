@@ -73,6 +73,10 @@
     <Compile Include="SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ThisIsNotAForm.cs" />
+    <Compile Include="ThisIsNotAForm.Designer.cs">
+      <DependentUpon>ThisIsNotAForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Timer.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -84,6 +88,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ThisIsNotAForm.resx">
+      <DependentUpon>ThisIsNotAForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
