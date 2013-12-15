@@ -69,6 +69,8 @@ namespace CoreWars
 
                     if (ac == "")
                         continue;
+					if(ac.ToUpper().Contains("EQU") && (!ac.Contains(';') || (ac.IndexOf("EQU") > ac.IndexOf(':'))))
+						labels[ac.Split(':')[0]] = ac.Substring(ac.ToUpper().IndexOf(':') + 5);
                     if (ac.Contains(':') && (!ac.Contains(';') || (ac.IndexOf(';') > ac.IndexOf(':'))))
                         labels[ac.Split(':')[0]] = "" + linenum;
                 }
@@ -82,21 +84,6 @@ namespace CoreWars
                         continue;
                     if (ac.Contains(':') && (!ac.Contains(';') || (ac.IndexOf(';') > ac.IndexOf(':'))))
                         ac = ac.Split(':')[1].TrimStart(' ').TrimEnd(' ');
-
-                    //meine änderung für EQU (Justus)
-                    if (ac.Contains("EQU") && (!ac.Contains(';') || (ac.IndexOf(';') > ac.IndexOf(':'))))
-                    {
-                        for (int p = 0; p < ac.IndexOf('Q'); p++)
-                        {
-                            string rlabel = " " + ac[p];
-
-                            foreach (string item in labels.Values)
-                            {
-                                ac.Replace(item, rlabel);
-                            }
-                        }
-                    }
-                    //meine änderung für EQU
 
                     if (ac[0] == ';') // Is Comment
                     {
@@ -172,7 +159,10 @@ namespace CoreWars
                     if (operation == "ORG")
                     {
                         startIndex = argument[0].Value;
+						continue;
                     }
+					if(operation == "EQU")
+						continue;
                     System.Diagnostics.Debug.WriteLine(new Engine.Cell(operation, argument[0], argument[1]).ToString());
                     code.Add(new Engine.Cell(operation, argument[0], argument[1]));
                 }
