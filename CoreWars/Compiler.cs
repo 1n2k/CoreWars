@@ -83,6 +83,21 @@ namespace CoreWars
                     if (ac.Contains(':') && (!ac.Contains(';') || (ac.IndexOf(';') > ac.IndexOf(':'))))
                         ac = ac.Split(':')[1].TrimStart(' ').TrimEnd(' ');
 
+                    //meine änderung für EQU (Justus)
+                    if (ac.Contains("EQU") && (!ac.Contains(';') || (ac.IndexOf(';') > ac.IndexOf(':'))))
+                    {
+                        for (int p = 0; p < ac.IndexOf('Q'); p++)
+                        {
+                            string rlabel = " " + ac[p];
+
+                            foreach (string item in labels.Values)
+                            {
+                                ac.Replace(item, rlabel);
+                            }
+                        }
+                    }
+                    //meine änderung für EQU
+
                     if (ac[0] == ';') // Is Comment
                     {
                         if (ac.StartsWith(";author"))  //;name = NAME
