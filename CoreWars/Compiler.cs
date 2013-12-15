@@ -9,6 +9,9 @@ namespace CoreWars
 {
     namespace IO
     {
+		/// <summary>
+		/// Compiler.
+		/// </summary>
         public class Compiler
         {
             static int op(char c, int i1, int i2)
@@ -56,6 +59,21 @@ namespace CoreWars
                 using (StreamReader sr = new StreamReader(path))
                     return Compiler.ParseCodeFile(sr.ReadToEnd().Split('\n'), standard);
             }
+			/// <summary>
+			/// Parses the code file.
+			/// </summary>
+			/// <returns>
+			/// The parsed code file.
+			/// </returns>
+			/// <param name='file'>
+			/// The File.
+			/// </param>
+			/// <param name='standard'>
+			/// The Standard.
+			/// </param>
+			/// <param name='playername'>
+			/// The Playername.
+			/// </param>
             public static Engine.Player ParseCodeFile(string[] file, Standard standard ,string playername = "< Kein Name >")
             {
                 int startIndex = 0;

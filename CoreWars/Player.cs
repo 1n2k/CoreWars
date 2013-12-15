@@ -37,16 +37,25 @@ namespace CoreWars
             /// </value>
             public int CoreCount { get; private set; }
 
+			/// <summary>
+			/// Gets the start index of the core.
+			/// </summary>
+			/// <value>
+			/// The start index of the core.
+			/// </value>
             public int StartCoreIndex { get; private set; }
 
             /// <summary>
             /// Initializes a new instance of the <see cref="CoreWars.Engine.Player"/> class.
             /// </summary>
             /// <param name='name'>
-            /// The player's name.
+            /// Name.
             /// </param>
             /// <param name='code'>
-            /// The player's code.
+            /// Code.
+            /// </param>
+            /// <param name='startCoreIndex'>
+            /// Start core index.
             /// </param>
             public Player(string name, List<Cell> code,int startCoreIndex = 0)
             {

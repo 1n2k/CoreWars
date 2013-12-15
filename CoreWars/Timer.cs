@@ -179,9 +179,7 @@ namespace Multimedia
         /// </param>
         public Timer(IContainer container)
         {
-            ///
-            /// Required for Windows.Forms Class Composition Designer support
-            ///
+            // Required for Windows.Forms Class Composition Designer support
             container.Add(this);
 
             Initialize();
@@ -195,6 +193,10 @@ namespace Multimedia
             Initialize();
         }
 
+		/// <summary>
+		/// Releases unmanaged resources and performs other cleanup operations before the <see cref="Multimedia.Timer"/> is
+		/// reclaimed by garbage collection.
+		/// </summary>
         ~Timer()
         {
             if(IsRunning)
@@ -621,8 +623,17 @@ namespace Multimedia
 
         #region IComponent Members
 
+		/// <summary>
+		/// Occurs when disposed.
+		/// </summary>
         public event System.EventHandler Disposed;
 
+		/// <summary>
+		/// Gets or sets the site.
+		/// </summary>
+		/// <value>
+		/// The site.
+		/// </value>
         public ISite Site
         {
             get

@@ -29,6 +29,9 @@ namespace CoreWars
             /// </summary>
             public static int MAXCYCLES = 100000;
 
+			/// <summary>
+			/// The CODEDISTANCE.
+			/// </summary>
             public static int CODEDISTANCE = 100;
             
             /// <summary>
