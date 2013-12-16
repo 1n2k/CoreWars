@@ -40,6 +40,7 @@ namespace CoreWars
             void myGUI_DrawRectangle(object sender, GUI.DrawRectangleEventArgs e)
             {
                 G.DrawRectangle(new Pen(e.color, 3), e.x, e.y, 3, 3);
+                pictureBox1.Refresh();
                 //drawRectangle(e.x, e.y, e.color);
             }
 
