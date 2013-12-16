@@ -27,13 +27,13 @@ namespace CoreWars
                 restXRectangles = Engine.Settings.MEMORYSIZE - (xRectangles * yRectangles);
                 if (restXRectangles == 0)
                 {
-                    Size = new System.Drawing.Size(15 + 7 * xRectangles, 30 + 7 * yRectangles);
+                    Size = new System.Drawing.Size(30 + 7 * xRectangles, 45 + 7 * yRectangles);
                 }
                 else
                 {
-                    Size = new System.Drawing.Size(15 + 7 * xRectangles, 30 + 7 * (yRectangles + 1));
+                    Size = new System.Drawing.Size(30 + 7 * xRectangles, 45 + 7 * (yRectangles + 1));
                 }
-                pictureBox1.Image = new Bitmap(15 + 7 * xRectangles, 30 + 7 * yRectangles);
+                pictureBox1.Image = new Bitmap(30 + 7 * xRectangles, 45 + 7 * yRectangles);
                 G = Graphics.FromImage(pictureBox1.Image);
             }
 

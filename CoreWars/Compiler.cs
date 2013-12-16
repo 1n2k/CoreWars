@@ -182,7 +182,7 @@ namespace CoreWars
 					if(operation == "EQU")
 						continue;
                     //System.Diagnostics.Debug.WriteLine(new Engine.Cell(operation, argument[0], argument[1]).ToString());
-                    code.Add(new Engine.Cell(operation, argument[0], argument[1]));
+                    code.Add(new Engine.Cell(operation.ToUpper(), argument[0], argument[1]));
                 }
                 return new Engine.Player(playername, code, startIndex);
             }
