@@ -17,7 +17,8 @@ namespace CoreWars
 			//Testfarben
 			List<Color> colors = new List<Color>();
 			//.....
-			
+
+            NoGraphicForm myNoGraphicForm;
 			int activePlayer;
 			bool noPlayer = true;
 			ThisIsNotAForm myThisIsNotAForm;
@@ -157,6 +158,7 @@ namespace CoreWars
 				}
 				else
 				{
+                    myNoGraphicForm = new NoGraphicForm();
 					myThisIsNotAForm = new ThisIsNotAForm(this);
 					List<Engine.Player> tempPlayer = new List<Engine.Player>(players);
 					Engine.Game.GetGame.Initialize(tempPlayer, false);
@@ -171,6 +173,7 @@ namespace CoreWars
 					button7.Enabled = true;
 					pausiert = false;
 					myThisIsNotAForm.Show();
+                    myNoGraphicForm.Show();
 				}
 			}
 
@@ -178,6 +181,7 @@ namespace CoreWars
 			{
 				timer.Stop();
 				myThisIsNotAForm.Close();
+                myNoGraphicForm.Close();
 				button4.Enabled = true;
 				button5.Enabled = false;
 				button6.Enabled = false;
@@ -289,6 +293,7 @@ namespace CoreWars
                             button7.Enabled = false;
                             pausiert = false;
                             myThisIsNotAForm.Close();
+                            myNoGraphicForm.Close();
                         }
                     }
                     catch (Exception) { }

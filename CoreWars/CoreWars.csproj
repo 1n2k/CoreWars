@@ -56,6 +56,12 @@
     </Compile>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Core.cs" />
+    <Compile Include="NoGraphicForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NoGraphicForm.Designer.cs">
+      <DependentUpon>NoGraphicForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Player.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Cell.cs" />
@@ -84,6 +90,9 @@
   <ItemGroup>
     <EmbeddedResource Include="GUI.resx">
       <DependentUpon>GUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NoGraphicForm.resx">
+      <DependentUpon>NoGraphicForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PlayerForm.resx">
       <DependentUpon>PlayerForm.cs</DependentUpon>
