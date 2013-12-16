@@ -93,21 +93,24 @@ namespace CoreWars
 				if(noPlayer){
 					//System.Diagnostics.Debug.WriteLine(e.CellIndex + "    "+ Engine.Game.GetGame[e.CellIndex].ToString());
 					//myThisIsNotAForm.drawRectangle((e.CellIndex%myThisIsNotAForm.xRectangles)*7+5,(((e.CellIndex-e.CellIndex%myThisIsNotAForm.xRectangles)/myThisIsNotAForm.xRectangles))*7+5,Color.Black);
-                    OnDrawRectangle(new DrawRectangleEventArgs((e.CellIndex % myThisIsNotAForm.xRectangles) * 7 + 5, (((e.CellIndex - e.CellIndex % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, Color.Black));
+                    OnDrawRectangle(new DrawRectangleEventArgs((e.CellIndex % myThisIsNotAForm.xRectangles) * 7 + 5,
+                        (((e.CellIndex - e.CellIndex % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, Color.Black));
                     if (e.CellIndex == Engine.Settings.MEMORYSIZE - 1)
                     {
                         for (int i = 0; i < players.Count; i++)
                         {
                             int t = Engine.Settings.GetInitialPosition(i);
 
-                            OnDrawRectangle(new DrawRectangleEventArgs((t % myThisIsNotAForm.xRectangles) * 7 + 5, (((t - t % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, colors[i]));
+                            OnDrawRectangle(new DrawRectangleEventArgs((t % myThisIsNotAForm.xRectangles) * 7 + 5,
+                                (((t - t % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, colors[i]));
                             //myThisIsNotAForm.drawRectangle((t % myThisIsNotAForm.xRectangles) * 7 + 5, (((t - t % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, colors[i]);
                         }
                     }
                     Application.DoEvents();
 				}else{
 					//System.Diagnostics.Debug.WriteLine(e.CellIndex + "    "+ Engine.Game.GetGame[e.CellIndex].ToString());
-                    OnDrawRectangle(new DrawRectangleEventArgs((e.CellIndex % myThisIsNotAForm.xRectangles) * 7 + 5, (((e.CellIndex - e.CellIndex % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, colors[activePlayer]));
+                    OnDrawRectangle(new DrawRectangleEventArgs((e.CellIndex % myThisIsNotAForm.xRectangles) * 7 + 5,
+                        (((e.CellIndex - e.CellIndex % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, colors[activePlayer]));
                     //myThisIsNotAForm.drawRectangle((e.CellIndex%myThisIsNotAForm.xRectangles)*7+5,(((e.CellIndex-e.CellIndex%myThisIsNotAForm.xRectangles)/myThisIsNotAForm.xRectangles))*7+5,colors[activePlayer]);
 					Application.DoEvents();
 				}
