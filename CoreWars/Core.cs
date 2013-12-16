@@ -77,7 +77,7 @@ namespace CoreWars
                 else if (game[this.Position].Arguments[0].Specifier == '*')
                     BField = (this.Position + game[BField].Arguments[0].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
 
-                System.Diagnostics.Debug.WriteLine("AField {0}, BField {1}, @Position {2}", AField, BField, this.Position);
+                //System.Diagnostics.Debug.WriteLine("AField {0}, BField {1}, @Position {2}", AField, BField, this.Position);
 
                 switch (game[this.Position].Operation)
                 {

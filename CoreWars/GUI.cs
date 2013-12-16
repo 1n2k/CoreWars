@@ -65,16 +65,50 @@ namespace CoreWars
 				MessageBox.Show("Der Spieler " + e.Object.Name + " ist gestorben.", "Spieler ist gestorben", MessageBoxButtons.OK);
 			}
 
-			public void memoryCellChanged(object sender, Engine.MemoryCellChangedEventArgs e)
+            #region test
+            public delegate void DrawRectangleEventHandler(object sender, DrawRectangleEventArgs e);
+            public class DrawRectangleEventArgs : EventArgs
+            {
+                public readonly int x;
+                public readonly int y;
+                public readonly Color color;
+
+                internal DrawRectangleEventArgs(int _x, int _y, Color _color)
+                {
+                    x = _x;
+                    y = _y;
+                    color = _color;
+                }
+            }
+            public event DrawRectangleEventHandler DrawRectangle;
+            protected virtual void OnDrawRectangle(DrawRectangleEventArgs e)
+            {
+                if (this.DrawRectangle != null)
+                    this.DrawRectangle(this, e);
+            }
+            #endregion
+
+            public void memoryCellChanged(object sender, Engine.MemoryCellChangedEventArgs e)
 			{
-				//neue Threads!!
 				if(noPlayer){
-					System.Diagnostics.Debug.WriteLine(e.CellIndex + "    "+ Engine.Game.GetGame[e.CellIndex].ToString());
-					myThisIsNotAForm.drawRectangle((e.CellIndex%myThisIsNotAForm.xRectangles)*7+5,(((e.CellIndex-e.CellIndex%myThisIsNotAForm.xRectangles)/myThisIsNotAForm.xRectangles))*7+5,Color.Black);
-					Application.DoEvents();
+					//System.Diagnostics.Debug.WriteLine(e.CellIndex + "    "+ Engine.Game.GetGame[e.CellIndex].ToString());
+					//myThisIsNotAForm.drawRectangle((e.CellIndex%myThisIsNotAForm.xRectangles)*7+5,(((e.CellIndex-e.CellIndex%myThisIsNotAForm.xRectangles)/myThisIsNotAForm.xRectangles))*7+5,Color.Black);
+                    OnDrawRectangle(new DrawRectangleEventArgs((e.CellIndex % myThisIsNotAForm.xRectangles) * 7 + 5, (((e.CellIndex - e.CellIndex % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, Color.Black));
+                    if (e.CellIndex == Engine.Settings.MEMORYSIZE - 1)
+                    {
+                        for (int i = 0; i < players.Count; i++)
+                        {
+                            int t = Engine.Settings.GetInitialPosition(i);
+
+                            OnDrawRectangle(new DrawRectangleEventArgs((t % myThisIsNotAForm.xRectangles) * 7 + 5, (((t - t % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, colors[i]));
+                            //myThisIsNotAForm.drawRectangle((t % myThisIsNotAForm.xRectangles) * 7 + 5, (((t - t % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, colors[i]);
+                        }
+                    }
+                    Application.DoEvents();
 				}else{
-					System.Diagnostics.Debug.WriteLine(e.CellIndex + "    "+ Engine.Game.GetGame[e.CellIndex].ToString());
-					myThisIsNotAForm.drawRectangle((e.CellIndex%myThisIsNotAForm.xRectangles)*7+5,(((e.CellIndex-e.CellIndex%myThisIsNotAForm.xRectangles)/myThisIsNotAForm.xRectangles))*7+5,colors[activePlayer]);
+					//System.Diagnostics.Debug.WriteLine(e.CellIndex + "    "+ Engine.Game.GetGame[e.CellIndex].ToString());
+                    OnDrawRectangle(new DrawRectangleEventArgs((e.CellIndex % myThisIsNotAForm.xRectangles) * 7 + 5, (((e.CellIndex - e.CellIndex % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, colors[activePlayer]));
+                    //myThisIsNotAForm.drawRectangle((e.CellIndex%myThisIsNotAForm.xRectangles)*7+5,(((e.CellIndex-e.CellIndex%myThisIsNotAForm.xRectangles)/myThisIsNotAForm.xRectangles))*7+5,colors[activePlayer]);
 					Application.DoEvents();
 				}
 			}
@@ -239,21 +273,25 @@ namespace CoreWars
 				}
 				else
 				{
-					if (Engine.Game.GetGame.SimulateNextTurn())
-					{
-						toolStripStatusLabel1.Text = Convert.ToInt32(toolStripStatusLabel1.Text) + 1 + "";
-						toolStripProgressBar1.Value++;
-					}
-					else
-					{
-						timer.Stop();
-						button4.Enabled = true;
-						button5.Enabled = false;
-						button6.Enabled = false;
-						button7.Enabled = false;
-						pausiert = false;
-						myThisIsNotAForm.Close();
-					}
+                    try
+                    {
+                        if (Engine.Game.GetGame.SimulateNextTurn())
+                        {
+                            toolStripStatusLabel1.Text = Convert.ToInt32(toolStripStatusLabel1.Text) + 1 + "";
+                            toolStripProgressBar1.Value++;
+                        }
+                        else
+                        {
+                            timer.Stop();
+                            button4.Enabled = true;
+                            button5.Enabled = false;
+                            button6.Enabled = false;
+                            button7.Enabled = false;
+                            pausiert = false;
+                            myThisIsNotAForm.Close();
+                        }
+                    }
+                    catch (Exception) { }
 				}
 			}
 

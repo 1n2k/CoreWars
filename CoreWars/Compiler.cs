@@ -113,13 +113,13 @@ namespace CoreWars
                     foreach (string item in labels.Keys)
                         ac = ac.Replace(item, labels[item]);
 
-                    System.Diagnostics.Debug.WriteLine(ac);
+                    //System.Diagnostics.Debug.WriteLine(ac);
 
                     foreach(char c in new []{'+','-','*','/'})
                         ac = Regex.Replace(ac, @"[0-9]+\" + c + @"[0-9]+", (Match M) =>
                             "" + op(c,Convert.ToInt32(M.Value.Split(c)[0]), Convert.ToInt32(M.Value.Split(c)[1])));
                     
-                    System.Diagnostics.Debug.WriteLine(ac);
+                    //System.Diagnostics.Debug.WriteLine(ac);
 
                     int i = 0; //Position im string
 
@@ -139,7 +139,7 @@ namespace CoreWars
                             modifier += ac[i++];
                     }
 
-                    System.Diagnostics.Debug.Assert(ac[i] == ' ');
+                    //System.Diagnostics.Debug.Assert(ac[i] == ' ');
                     for (int o = 0; o < 2; ++o)
                     {
                         if (i == ac.Length)
@@ -181,7 +181,7 @@ namespace CoreWars
                     }
 					if(operation == "EQU")
 						continue;
-                    System.Diagnostics.Debug.WriteLine(new Engine.Cell(operation, argument[0], argument[1]).ToString());
+                    //System.Diagnostics.Debug.WriteLine(new Engine.Cell(operation, argument[0], argument[1]).ToString());
                     code.Add(new Engine.Cell(operation, argument[0], argument[1]));
                 }
                 return new Engine.Player(playername, code, startIndex);
