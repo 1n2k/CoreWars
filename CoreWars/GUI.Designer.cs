@@ -30,7 +30,7 @@
             /// </summary>
             private void InitializeComponent()
             {
-                this.components = new System.ComponentModel.Container();
+                System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GUI));
                 this.listBox1 = new System.Windows.Forms.ListBox();
                 this.button1 = new System.Windows.Forms.Button();
                 this.button2 = new System.Windows.Forms.Button();
@@ -48,7 +48,6 @@
                 this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
                 this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
                 this.button8 = new System.Windows.Forms.Button();
-                this.timer = new Multimedia.Timer(this.components);
                 ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
                 this.statusStrip1.SuspendLayout();
                 this.SuspendLayout();
@@ -185,19 +184,19 @@
                 // toolStripStatusLabel1
                 // 
                 this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-                this.toolStripStatusLabel1.Size = new System.Drawing.Size(109, 17);
+                this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
                 this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
                 // 
                 // toolStripStatusLabel2
                 // 
                 this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-                this.toolStripStatusLabel2.Size = new System.Drawing.Size(11, 17);
+                this.toolStripStatusLabel2.Size = new System.Drawing.Size(12, 17);
                 this.toolStripStatusLabel2.Text = "/";
                 // 
                 // toolStripStatusLabel3
                 // 
                 this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-                this.toolStripStatusLabel3.Size = new System.Drawing.Size(109, 17);
+                this.toolStripStatusLabel3.Size = new System.Drawing.Size(118, 17);
                 this.toolStripStatusLabel3.Text = "toolStripStatusLabel1";
                 // 
                 // button8
@@ -209,13 +208,6 @@
                 this.button8.Text = "Einstellungen";
                 this.button8.UseVisualStyleBackColor = true;
                 this.button8.Click += new System.EventHandler(this.button8_Click);
-                // 
-                // timer
-                // 
-                this.timer.Mode = Multimedia.TimerMode.Periodic;
-                this.timer.Period = 1;
-                this.timer.Resolution = 1;
-                this.timer.SynchronizingObject = null;
                 // 
                 // GUI
                 // 
@@ -236,6 +228,7 @@
                 this.Controls.Add(this.button1);
                 this.Controls.Add(this.listBox1);
                 this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+                this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
                 this.MaximizeBox = false;
                 this.Name = "GUI";
                 this.Text = "Form1";
