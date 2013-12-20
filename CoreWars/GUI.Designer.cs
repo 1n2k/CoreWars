@@ -30,6 +30,7 @@
             /// </summary>
             private void InitializeComponent()
             {
+                this.components = new System.ComponentModel.Container();
                 System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GUI));
                 this.listBox1 = new System.Windows.Forms.ListBox();
                 this.button1 = new System.Windows.Forms.Button();
@@ -48,6 +49,7 @@
                 this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
                 this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
                 this.button8 = new System.Windows.Forms.Button();
+                this.timer = new Multimedia.Timer(this.components);
                 ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
                 this.statusStrip1.SuspendLayout();
                 this.SuspendLayout();
@@ -208,6 +210,13 @@
                 this.button8.Text = "Einstellungen";
                 this.button8.UseVisualStyleBackColor = true;
                 this.button8.Click += new System.EventHandler(this.button8_Click);
+                // 
+                // timer
+                // 
+                this.timer.Mode = Multimedia.TimerMode.Periodic;
+                this.timer.Period = 1;
+                this.timer.Resolution = 1;
+                this.timer.SynchronizingObject = null;
                 // 
                 // GUI
                 // 
