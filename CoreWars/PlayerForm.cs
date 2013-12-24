@@ -11,14 +11,14 @@ namespace CoreWars
             bool save = true;
             bool neu = false;
             GUI myGUI;
-            Engine.Player myPlayer;
+            Engine.Simulator.Player myPlayer;
 
-            public PlayerForm(GUI GUI, Engine.Player player = null)
+            public PlayerForm(GUI GUI, Engine.Simulator.Player player = null)
             {
                 myGUI = GUI;
                 if (player == null)
                 {
-                    player = new Engine.Player("", new System.Collections.Generic.List<Engine.Cell>());
+                    player = new Engine.Simulator.Player("", new System.Collections.Generic.List<Engine.Simulator.Cell>());
                     this.Text = "Spieler erstellen";
                     neu = true;
                 }
@@ -29,7 +29,7 @@ namespace CoreWars
             private void PlayerForm_Load(object sender, EventArgs e)
             {
                 textBox1.Text = myPlayer.Name;
-                foreach (Engine.Cell cell in myPlayer.Code)
+                foreach (Engine.Simulator.Cell cell in myPlayer.Code)
                 {
                     textBox2.Text += cell.ToString() + "\n";
                 }
@@ -43,11 +43,11 @@ namespace CoreWars
                     {
                         if (!myGUI.neunundvierzig)
                         {
-                            myGUI.newPlayer(neu, CoreWars.IO.Compiler.ParseCodeFile(textBox2.Text.Split('\n'), IO.Compiler.Standard._88, textBox1.Text));
+                            myGUI.newPlayer(neu, CoreWars.Engine.IO.Compiler.ParseCodeFile(textBox2.Text.Split('\n'), Engine.IO.Compiler.Standard._88, textBox1.Text));
                         }
                         else
                         {
-                            myGUI.newPlayer(neu, CoreWars.IO.Compiler.ParseCodeFile(textBox2.Text.Split('\n'), IO.Compiler.Standard._94, textBox1.Text));
+                            myGUI.newPlayer(neu, CoreWars.Engine.IO.Compiler.ParseCodeFile(textBox2.Text.Split('\n'), Engine.IO.Compiler.Standard._94, textBox1.Text));
                         }
                     }
                     catch (Exception ex)

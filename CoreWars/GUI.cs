@@ -24,7 +24,7 @@ namespace CoreWars
 			ThisIsNotAForm myThisIsNotAForm;
 			bool pausiert = false;
 			public bool neunundvierzig { get; set; }
-			public List<Engine.Player> players = new List<Engine.Player>();
+			public List<Engine.Simulator.Player> players = new List<Engine.Simulator.Player>();
 
 			public GUI()
 			{
@@ -39,12 +39,12 @@ namespace CoreWars
 
 			private void GUI_Load(object sender, EventArgs e)
 			{
-				Engine.Game.GetGame.TurnStarted += new Engine.TurnStartedEventHandler(Engine_Game_GetGame_TurnStarted);
-				Engine.Game.GetGame.PlayerDied += new Engine.PlayerDiedEventHandler(playerDied);
-				Engine.Game.GetGame.MemoryCellChanged += new Engine.MemoryCellChangedEventHandler(memoryCellChanged);
-				toolStripProgressBar1.Maximum = Engine.Settings.MAXCYCLES;
+				Engine.Simulator.Game.GetGame.TurnStarted += new Engine.Simulator.TurnStartedEventHandler(Engine_Game_GetGame_TurnStarted);
+				Engine.Simulator.Game.GetGame.PlayerDied += new Engine.Simulator.PlayerDiedEventHandler(playerDied);
+				Engine.Simulator.Game.GetGame.MemoryCellChanged += new Engine.Simulator.MemoryCellChangedEventHandler(memoryCellChanged);
+				toolStripProgressBar1.Maximum = Engine.Simulator.Settings.MAXCYCLES;
 				toolStripStatusLabel1.Text = "0";
-				toolStripStatusLabel3.Text = "" + Engine.Settings.MAXCYCLES;
+				toolStripStatusLabel3.Text = "" + Engine.Simulator.Settings.MAXCYCLES;
 				timer.Tick += new EventHandler(timer_Tick);
 				timer.Period = 1000 / trackBar1.Value;
 				pausiert = false;
@@ -55,13 +55,13 @@ namespace CoreWars
 				neunundvierzig = false;
 			}
 
-			void Engine_Game_GetGame_TurnStarted(object sender, Engine.TurnStartedEventArgs e)
+			void Engine_Game_GetGame_TurnStarted(object sender, Engine.Simulator.TurnStartedEventArgs e)
 			{
 				noPlayer = false;
 				activePlayer = (activePlayer+1)%players.Count;
 			}
 			
-			public void playerDied(object sender, Engine.ObjectDiedEventArgs<Engine.Player> e)
+			public void playerDied(object sender, Engine.Simulator.ObjectDiedEventArgs<Engine.Simulator.Player> e)
 			{
 				MessageBox.Show("Der Spieler " + e.Object.Name + " ist gestorben.", "Spieler ist gestorben", MessageBoxButtons.OK);
 			}
@@ -89,18 +89,18 @@ namespace CoreWars
             }
             #endregion
 
-            public void memoryCellChanged(object sender, Engine.MemoryCellChangedEventArgs e)
+            public void memoryCellChanged(object sender, Engine.Simulator.MemoryCellChangedEventArgs e)
 			{
 				if(noPlayer){
-					//System.Diagnostics.Debug.WriteLine(e.CellIndex + "    "+ Engine.Game.GetGame[e.CellIndex].ToString());
+					//System.Diagnostics.Debug.WriteLine(e.CellIndex + "    "+ Engine.Simulator.Game.GetGame[e.CellIndex].ToString());
 					//myThisIsNotAForm.drawRectangle((e.CellIndex%myThisIsNotAForm.xRectangles)*7+5,(((e.CellIndex-e.CellIndex%myThisIsNotAForm.xRectangles)/myThisIsNotAForm.xRectangles))*7+5,Color.Black);
                     OnDrawRectangle(new DrawRectangleEventArgs((e.CellIndex % myThisIsNotAForm.xRectangles) * 7 + 5,
                         (((e.CellIndex - e.CellIndex % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, Color.Black));
-                    if (e.CellIndex == Engine.Settings.MEMORYSIZE - 1)
+                    if (e.CellIndex == Engine.Simulator.Settings.MEMORYSIZE - 1)
                     {
                         for (int i = 0; i < players.Count; i++)
                         {
-                            int t = Engine.Settings.GetInitialPosition(i);
+                            int t = Engine.Simulator.Settings.GetInitialPosition(i);
 
                             OnDrawRectangle(new DrawRectangleEventArgs((t % myThisIsNotAForm.xRectangles) * 7 + 5,
                                 (((t - t % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, colors[i]));
@@ -109,7 +109,7 @@ namespace CoreWars
                     }
                     Application.DoEvents();
 				}else{
-					//System.Diagnostics.Debug.WriteLine(e.CellIndex + "    "+ Engine.Game.GetGame[e.CellIndex].ToString());
+					//System.Diagnostics.Debug.WriteLine(e.CellIndex + "    "+ Engine.Simulator.Game.GetGame[e.CellIndex].ToString());
                     OnDrawRectangle(new DrawRectangleEventArgs((e.CellIndex % myThisIsNotAForm.xRectangles) * 7 + 5,
                         (((e.CellIndex - e.CellIndex % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, colors[activePlayer]));
                     //myThisIsNotAForm.drawRectangle((e.CellIndex%myThisIsNotAForm.xRectangles)*7+5,(((e.CellIndex-e.CellIndex%myThisIsNotAForm.xRectangles)/myThisIsNotAForm.xRectangles))*7+5,colors[activePlayer]);
@@ -163,13 +163,13 @@ namespace CoreWars
 				{
                     myNoGraphicForm = new NoGraphicForm();
 					myThisIsNotAForm = new ThisIsNotAForm(this);
-					List<Engine.Player> tempPlayer = new List<Engine.Player>(players);
-					Engine.Game.GetGame.Initialize(tempPlayer, false);
+					List<Engine.Simulator.Player> tempPlayer = new List<Engine.Simulator.Player>(players);
+					Engine.Simulator.Game.GetGame.Initialize(tempPlayer, false);
 					timer.Start();
 					toolStripProgressBar1.Value = 0;
-					toolStripProgressBar1.Maximum = Engine.Settings.MAXCYCLES;
+					toolStripProgressBar1.Maximum = Engine.Simulator.Settings.MAXCYCLES;
 					toolStripStatusLabel1.Text = "0";
-					toolStripStatusLabel3.Text = "" + Engine.Settings.MAXCYCLES;
+					toolStripStatusLabel3.Text = "" + Engine.Simulator.Settings.MAXCYCLES;
 					button4.Enabled = false;
 					button5.Enabled = true;
 					button6.Enabled = false;
@@ -200,7 +200,7 @@ namespace CoreWars
 				}
 				else
 				{
-					if (Engine.Game.GetGame.SimulateNextTurn())
+					if (Engine.Simulator.Game.GetGame.SimulateNextTurn())
 					{
 						toolStripStatusLabel1.Text = Convert.ToInt32(toolStripStatusLabel1.Text) + 1 + "";
 						toolStripProgressBar1.Value++;
@@ -256,7 +256,7 @@ namespace CoreWars
 				listBox1.Items.RemoveAt(listBox1.SelectedIndex);
 			}
 
-			public void newPlayer(bool neu, Engine.Player player)
+			public void newPlayer(bool neu, Engine.Simulator.Player player)
 			{
 				if (neu)
 				{
@@ -282,7 +282,7 @@ namespace CoreWars
 				{
                     try
                     {
-                        if (Engine.Game.GetGame.SimulateNextTurn())
+                        if (Engine.Simulator.Game.GetGame.SimulateNextTurn())
                         {
                             toolStripStatusLabel1.Text = Convert.ToInt32(toolStripStatusLabel1.Text) + 1 + "";
                             toolStripProgressBar1.Value++;
@@ -306,9 +306,9 @@ namespace CoreWars
 			public void changedSettings()
 			{
 				toolStripProgressBar1.Value = 0;
-				toolStripProgressBar1.Maximum = Engine.Settings.MAXCYCLES;
+				toolStripProgressBar1.Maximum = Engine.Simulator.Settings.MAXCYCLES;
 				toolStripStatusLabel1.Text = "0";
-				toolStripStatusLabel3.Text = "" + Engine.Settings.MAXCYCLES;
+				toolStripStatusLabel3.Text = "" + Engine.Simulator.Settings.MAXCYCLES;
 			}
 
 			private void trackBar1_Scroll(object sender, EventArgs e)

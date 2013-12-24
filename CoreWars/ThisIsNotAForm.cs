@@ -22,9 +22,9 @@ namespace CoreWars
                 myGUI.DrawRectangle += new GUI.DrawRectangleEventHandler(myGUI_DrawRectangle);
 
                 DoubleBuffered = true;
-                xRectangles = (int)Math.Round(Math.Sqrt(Engine.Settings.MEMORYSIZE));
-                yRectangles = (int)Math.Round((double)(Engine.Settings.MEMORYSIZE / xRectangles));
-                restXRectangles = Engine.Settings.MEMORYSIZE - (xRectangles * yRectangles);
+                xRectangles = (int)Math.Round(Math.Sqrt(Engine.Simulator.Settings.MEMORYSIZE));
+                yRectangles = (int)Math.Round((double)(Engine.Simulator.Settings.MEMORYSIZE / xRectangles));
+                restXRectangles = Engine.Simulator.Settings.MEMORYSIZE - (xRectangles * yRectangles);
                 if (restXRectangles == 0)
                 {
                     Size = new System.Drawing.Size(30 + 7 * xRectangles, 45 + 7 * yRectangles);

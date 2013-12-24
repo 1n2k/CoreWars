@@ -17,11 +17,11 @@ namespace CoreWars
 
             void SettingsFormLoad(object sender, EventArgs e)
             {
-                textBox1.Text = "" + Engine.Settings.MEMORYSIZE;
-                textBox2.Text = "" + Engine.Settings.MAXCORESPERPLAYER;
-                textBox3.Text = "" + Engine.Settings.MAXLENGTH;
-                textBox4.Text = "" + Engine.Settings.MAXCYCLES;
-                textBox5.Text = "" + Engine.Settings.CODEDISTANCE;
+                textBox1.Text = "" + Engine.Simulator.Settings.MEMORYSIZE;
+                textBox2.Text = "" + Engine.Simulator.Settings.MAXCORESPERPLAYER;
+                textBox3.Text = "" + Engine.Simulator.Settings.MAXLENGTH;
+                textBox4.Text = "" + Engine.Simulator.Settings.MAXCYCLES;
+                textBox5.Text = "" + Engine.Simulator.Settings.CODEDISTANCE;
                 if (myGUI.neunundvierzig)
                 {
                     radioButton2.Checked = true;
@@ -41,12 +41,12 @@ namespace CoreWars
             {
                 try
                 {
-                    Engine.Settings.MEMORYSIZE = Convert.ToInt32(textBox1.Text);
+                    Engine.Simulator.Settings.MEMORYSIZE = Convert.ToInt32(textBox1.Text);
                 }
                 catch (Exception)
                 {
                     MessageBox.Show("Die Eingabe hat das falsche Format!", "Falsches Format", MessageBoxButtons.OK);
-                    textBox1.Text = "" + Engine.Settings.MEMORYSIZE;
+                    textBox1.Text = "" + Engine.Simulator.Settings.MEMORYSIZE;
                 }
             }
 
@@ -54,12 +54,12 @@ namespace CoreWars
             {
                 try
                 {
-                    Engine.Settings.MAXCORESPERPLAYER = Convert.ToInt32(textBox2.Text);
+                    Engine.Simulator.Settings.MAXCORESPERPLAYER = Convert.ToInt32(textBox2.Text);
                 }
                 catch (Exception)
                 {
                     MessageBox.Show("Die Eingabe hat das falsche Format!", "Falsches Format", MessageBoxButtons.OK);
-                    textBox2.Text = "" + Engine.Settings.MAXCORESPERPLAYER;
+                    textBox2.Text = "" + Engine.Simulator.Settings.MAXCORESPERPLAYER;
                 }
             }
 
@@ -67,12 +67,12 @@ namespace CoreWars
             {
                 try
                 {
-                    Engine.Settings.MAXLENGTH = Convert.ToInt32(textBox3.Text);
+                    Engine.Simulator.Settings.MAXLENGTH = Convert.ToInt32(textBox3.Text);
                 }
                 catch (Exception)
                 {
                     MessageBox.Show("Die Eingabe hat das falsche Format!", "Falsches Format", MessageBoxButtons.OK);
-                    textBox3.Text = "" + Engine.Settings.MAXLENGTH;
+                    textBox3.Text = "" + Engine.Simulator.Settings.MAXLENGTH;
                 }
             }
 
@@ -80,12 +80,12 @@ namespace CoreWars
             {
                 try
                 {
-                    Engine.Settings.MAXCYCLES = Convert.ToInt32(textBox4.Text);
+                    Engine.Simulator.Settings.MAXCYCLES = Convert.ToInt32(textBox4.Text);
                 }
                 catch (Exception)
                 {
                     MessageBox.Show("Die Eingabe hat das falsche Format!", "Falsches Format", MessageBoxButtons.OK);
-                    textBox4.Text = "" + Engine.Settings.MAXCYCLES;
+                    textBox4.Text = "" + Engine.Simulator.Settings.MAXCYCLES;
                 }
 
             }
@@ -94,12 +94,12 @@ namespace CoreWars
             {
                 try
                 {
-                    Engine.Settings.CODEDISTANCE = Convert.ToInt32(textBox5.Text);
+                    Engine.Simulator.Settings.CODEDISTANCE = Convert.ToInt32(textBox5.Text);
                 }
                 catch (Exception)
                 {
                     MessageBox.Show("Die Eingabe hat das falsche Format!", "Falsches Format", MessageBoxButtons.OK);
-                    textBox5.Text = "" + Engine.Settings.CODEDISTANCE;
+                    textBox5.Text = "" + Engine.Simulator.Settings.CODEDISTANCE;
                 }
             }
 
