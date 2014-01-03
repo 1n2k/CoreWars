@@ -15,21 +15,24 @@ namespace CoreWars
 		public partial class GUI : Form
 		{
 			//Testfarben
-			List<Color> colors = new List<Color>();
+			public List<Color> colors = new List<Color>();
 			//.....
 
-            NoGraphicForm myNoGraphicForm;
+            PlayerForm myPlayerForm;
+			NoGraphicForm myNoGraphicForm;
+            int firstActivePlayer;
 			int activePlayer;
 			bool noPlayer = true;
 			ThisIsNotAForm myThisIsNotAForm;
 			bool pausiert = false;
-			public bool neunundvierzig { get; set; }
+			public Engine.IO.Compiler.Standard standard;
 			public List<Engine.Simulator.Player> players = new List<Engine.Simulator.Player>();
+            public List<int> alivePlayers;
 
 			public GUI()
 			{
 				InitializeComponent();
-				activePlayer = -1;
+				firstActivePlayer = -1;
 				colors.Add(Color.Blue);
 				colors.Add(Color.Red);
 				colors.Add(Color.Green);
@@ -52,67 +55,64 @@ namespace CoreWars
 				button5.Enabled = false;
 				button6.Enabled = false;
 				button7.Enabled = false;
-				neunundvierzig = false;
+				standard = Engine.IO.Compiler.Standard._88;
 			}
 
 			void Engine_Game_GetGame_TurnStarted(object sender, Engine.Simulator.TurnStartedEventArgs e)
 			{
 				noPlayer = false;
-				activePlayer = (activePlayer+1)%players.Count;
+				activePlayer = (activePlayer+1)%alivePlayers.Count;
 			}
 			
 			public void playerDied(object sender, Engine.Simulator.ObjectDiedEventArgs<Engine.Simulator.Player> e)
 			{
 				MessageBox.Show("Der Spieler " + e.Object.Name + " ist gestorben.", "Spieler ist gestorben", MessageBoxButtons.OK);
+                alivePlayers.Remove(players.IndexOf(e.Object));
 			}
 
-            #region test
-            public delegate void DrawRectangleEventHandler(object sender, DrawRectangleEventArgs e);
-            public class DrawRectangleEventArgs : EventArgs
-            {
-                public readonly int x;
-                public readonly int y;
-                public readonly Color color;
+			#region test
+			public delegate void DrawRectangleEventHandler(object sender, DrawRectangleEventArgs e);
+			public class DrawRectangleEventArgs : EventArgs
+			{
+				public readonly int x;
+				public readonly int y;
+				public readonly Color color;
 
-                internal DrawRectangleEventArgs(int _x, int _y, Color _color)
-                {
-                    x = _x;
-                    y = _y;
-                    color = _color;
-                }
-            }
-            public event DrawRectangleEventHandler DrawRectangle;
-            protected virtual void OnDrawRectangle(DrawRectangleEventArgs e)
-            {
-                if (this.DrawRectangle != null)
-                    this.DrawRectangle(this, e);
-            }
-            #endregion
+				internal DrawRectangleEventArgs(int _x, int _y, Color _color)
+				{
+					x = _x;
+					y = _y;
+					color = _color;
+				}
+			}
+			public event DrawRectangleEventHandler DrawRectangle;
+			protected virtual void OnDrawRectangle(DrawRectangleEventArgs e)
+			{
+				if (this.DrawRectangle != null)
+					this.DrawRectangle(this, e);
+			}
+			#endregion
 
-            public void memoryCellChanged(object sender, Engine.Simulator.MemoryCellChangedEventArgs e)
+			public void memoryCellChanged(object sender, Engine.Simulator.MemoryCellChangedEventArgs e)
 			{
 				if(noPlayer){
 					//System.Diagnostics.Debug.WriteLine(e.CellIndex + "    "+ Engine.Simulator.Game.GetGame[e.CellIndex].ToString());
-					//myThisIsNotAForm.drawRectangle((e.CellIndex%myThisIsNotAForm.xRectangles)*7+5,(((e.CellIndex-e.CellIndex%myThisIsNotAForm.xRectangles)/myThisIsNotAForm.xRectangles))*7+5,Color.Black);
-                    OnDrawRectangle(new DrawRectangleEventArgs((e.CellIndex % myThisIsNotAForm.xRectangles) * 7 + 5,
-                        (((e.CellIndex - e.CellIndex % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, Color.Black));
-                    if (e.CellIndex == Engine.Simulator.Settings.MEMORYSIZE - 1)
-                    {
-                        for (int i = 0; i < players.Count; i++)
-                        {
-                            int t = Engine.Simulator.Settings.GetInitialPosition(i);
-
-                            OnDrawRectangle(new DrawRectangleEventArgs((t % myThisIsNotAForm.xRectangles) * 7 + 5,
-                                (((t - t % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, colors[i]));
-                            //myThisIsNotAForm.drawRectangle((t % myThisIsNotAForm.xRectangles) * 7 + 5, (((t - t % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, colors[i]);
-                        }
-                    }
-                    Application.DoEvents();
+					OnDrawRectangle(new DrawRectangleEventArgs((e.CellIndex % myThisIsNotAForm.xRectangles) * 7 + 5,
+					                                           (((e.CellIndex - e.CellIndex % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, Color.Black));
+					/*if (e.CellIndex == Engine.Simulator.Settings.MEMORYSIZE - 1)
+					{
+						for (int i = 0; i < players.Count; i++)
+						{
+							int t = Engine.Simulator.Settings.GetInitialPosition(i);
+							OnDrawRectangle(new DrawRectangleEventArgs((t % myThisIsNotAForm.xRectangles) * 7 + 5,
+							                                           (((t - t % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, colors[i]));
+						}
+					}*/
+					Application.DoEvents();
 				}else{
 					//System.Diagnostics.Debug.WriteLine(e.CellIndex + "    "+ Engine.Simulator.Game.GetGame[e.CellIndex].ToString());
-                    OnDrawRectangle(new DrawRectangleEventArgs((e.CellIndex % myThisIsNotAForm.xRectangles) * 7 + 5,
-                        (((e.CellIndex - e.CellIndex % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, colors[activePlayer]));
-                    //myThisIsNotAForm.drawRectangle((e.CellIndex%myThisIsNotAForm.xRectangles)*7+5,(((e.CellIndex-e.CellIndex%myThisIsNotAForm.xRectangles)/myThisIsNotAForm.xRectangles))*7+5,colors[activePlayer]);
+					OnDrawRectangle(new DrawRectangleEventArgs((e.CellIndex % myThisIsNotAForm.xRectangles) * 7 + 5,
+					                                           (((e.CellIndex - e.CellIndex % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, colors[activePlayer]));
 					Application.DoEvents();
 				}
 			}
@@ -127,16 +127,14 @@ namespace CoreWars
 				}
 				else
 				{
-					PlayerForm playerForm = new PlayerForm(this, players[listBox1.SelectedIndex]);
-					playerForm.ShowDialog();
+					changePlayer(listBox1.SelectedIndex);
 				}
 			}
 
 			private void button2_Click(object sender, EventArgs e) //Spieler hinzufügen
 			{
-				PlayerForm playerForm = new PlayerForm(this);
-				playerForm.ShowDialog();
-				activePlayer++;
+				myPlayerForm = new PlayerForm(this);
+				myPlayerForm.ShowDialog();
 			}
 
 			private void button3_Click(object sender, EventArgs e) //Spieler löschen
@@ -147,9 +145,7 @@ namespace CoreWars
 				}
 				else
 				{
-					players.RemoveAt(listBox1.SelectedIndex);
-					listBox1.Items.RemoveAt(listBox1.SelectedIndex);
-					activePlayer--;
+					deletePlayer(listBox1.SelectedIndex);
 				}
 			}
 
@@ -161,10 +157,24 @@ namespace CoreWars
 				}
 				else
 				{
-                    myNoGraphicForm = new NoGraphicForm();
+                    alivePlayers = new List<int>();
+                    for (int i = 0; i < players.Count; i++)
+                    {
+                        alivePlayers.Add(i);
+                    }
+                    activePlayer = firstActivePlayer;
+                    noPlayer = true;
+					myNoGraphicForm = new NoGraphicForm();
 					myThisIsNotAForm = new ThisIsNotAForm(this);
-					List<Engine.Simulator.Player> tempPlayer = new List<Engine.Simulator.Player>(players);
-					Engine.Simulator.Game.GetGame.Initialize(tempPlayer, false);
+					List<Engine.Simulator.Player> tempPlayers = new List<Engine.Simulator.Player>(players);
+                    if (standard == Engine.IO.Compiler.Standard._88)
+                    {
+                        Engine.Simulator.Game.GetGame.Initialize(tempPlayers, false);
+                    }
+                    else
+                    {
+                        Engine.Simulator.Game.GetGame.Initialize(tempPlayers, true);
+                    }
 					timer.Start();
 					toolStripProgressBar1.Value = 0;
 					toolStripProgressBar1.Maximum = Engine.Simulator.Settings.MAXCYCLES;
@@ -176,7 +186,7 @@ namespace CoreWars
 					button7.Enabled = true;
 					pausiert = false;
 					myThisIsNotAForm.Show();
-                    myNoGraphicForm.Show();
+					myNoGraphicForm.Show();
 				}
 			}
 
@@ -184,7 +194,7 @@ namespace CoreWars
 			{
 				timer.Stop();
 				myThisIsNotAForm.Close();
-                myNoGraphicForm.Close();
+				myNoGraphicForm.Close();
 				button4.Enabled = true;
 				button5.Enabled = false;
 				button6.Enabled = false;
@@ -250,25 +260,37 @@ namespace CoreWars
 
 			#endregion
 
-			public void deletePlayer()
+			public void changePlayer(int index){
+                myPlayerForm.Close();
+				myPlayerForm = new PlayerForm(this, index, players[index]);
+				myPlayerForm.ShowDialog();
+			}
+			
+			public void deletePlayer(int index)
 			{
-				players.RemoveAt(listBox1.SelectedIndex);
-				listBox1.Items.RemoveAt(listBox1.SelectedIndex);
+				players.RemoveAt(index);
+				listBox1.Items.RemoveAt(index);
+                firstActivePlayer--;
 			}
 
-			public void newPlayer(bool neu, Engine.Simulator.Player player)
+			public void newPlayer(bool isNewPlayer, Engine.Simulator.Player player, int index = -1)
 			{
-				if (neu)
+				if (isNewPlayer)
 				{
-					players.Add(player);
-					listBox1.Items.Add(player.Name);
+					if(index == -1){
+						players.Add(player);
+						listBox1.Items.Add(player.Name);
+                        firstActivePlayer++;
+					}else{
+						players.Insert(index, player);
+						listBox1.Items.Insert(index, player.Name);
+                        firstActivePlayer++;
+					}
 				}
 				else
 				{
-					players.Insert(listBox1.SelectedIndex, player);
-					listBox1.Items.Insert(listBox1.SelectedIndex, player.Name);
-					players.RemoveAt(listBox1.SelectedIndex);
-					listBox1.Items.RemoveAt(listBox1.SelectedIndex);
+					newPlayer(true, player, index);
+					deletePlayer(index + 1);
 				}
 			}
 
@@ -280,26 +302,26 @@ namespace CoreWars
 				}
 				else
 				{
-                    try
-                    {
-                        if (Engine.Simulator.Game.GetGame.SimulateNextTurn())
-                        {
-                            toolStripStatusLabel1.Text = Convert.ToInt32(toolStripStatusLabel1.Text) + 1 + "";
-                            toolStripProgressBar1.Value++;
-                        }
-                        else
-                        {
-                            timer.Stop();
-                            button4.Enabled = true;
-                            button5.Enabled = false;
-                            button6.Enabled = false;
-                            button7.Enabled = false;
-                            pausiert = false;
-                            myThisIsNotAForm.Close();
-                            myNoGraphicForm.Close();
-                        }
-                    }
-                    catch (Exception) { }
+					try
+					{
+						if (Engine.Simulator.Game.GetGame.SimulateNextTurn())
+						{
+							toolStripStatusLabel1.Text = Convert.ToInt32(toolStripStatusLabel1.Text) + 1 + "";
+							toolStripProgressBar1.Value++;
+						}
+						else
+						{
+							timer.Stop();
+							button4.Enabled = true;
+							button5.Enabled = false;
+							button6.Enabled = false;
+							button7.Enabled = false;
+							pausiert = false;
+							myThisIsNotAForm.Close();
+							myNoGraphicForm.Close();
+						}
+					}
+					catch (Exception) { }
 				}
 			}
 

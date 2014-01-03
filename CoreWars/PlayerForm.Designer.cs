@@ -118,7 +118,6 @@ namespace CoreWars
                 this.MinimizeBox = false;
                 this.Name = "PlayerForm";
                 this.Text = "Spieler bearbeiten";
-                this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.PlayerForm_FormClosed);
                 this.Load += new System.EventHandler(this.PlayerForm_Load);
                 this.ResumeLayout(false);
                 this.PerformLayout();
