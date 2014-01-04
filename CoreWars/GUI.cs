@@ -102,7 +102,7 @@ namespace CoreWars
                     bool isStarterCell = false;
                     for (int i = 0; i < players.Count; i++)
                     {
-                        for (int j = 0; j < players[i].Code.Count - 1; j++)
+                        for (int j = 0; j < players[i].Code.Count; j++)
                         {
                             if (e.CellIndex == j + Engine.Simulator.Settings.GetInitialPosition(i))
                             {
