@@ -193,10 +193,10 @@ namespace Multimedia
             Initialize();
         }
 
-		/// <summary>
-		/// Releases unmanaged resources and performs other cleanup operations before the <see cref="Multimedia.Timer"/> is
-		/// reclaimed by garbage collection.
-		/// </summary>
+        /// <summary>
+        /// Releases unmanaged resources and performs other cleanup operations before the <see cref="Multimedia.Timer"/> is
+        /// reclaimed by garbage collection.
+        /// </summary>
         ~Timer()
         {
             if(IsRunning)
@@ -317,7 +317,7 @@ namespace Multimedia
             // Stop and destroy timer.
             int result = timeKillEvent(timerID);
 
-            Debug.Assert(result == TIMERR_NOERROR);
+            //Debug.Assert(result == TIMERR_NOERROR);
 
             running = false;
 
@@ -623,17 +623,17 @@ namespace Multimedia
 
         #region IComponent Members
 
-		/// <summary>
-		/// Occurs when disposed.
-		/// </summary>
+        /// <summary>
+        /// Occurs when disposed.
+        /// </summary>
         public event System.EventHandler Disposed;
 
-		/// <summary>
-		/// Gets or sets the site.
-		/// </summary>
-		/// <value>
-		/// The site.
-		/// </value>
+        /// <summary>
+        /// Gets or sets the site.
+        /// </summary>
+        /// <value>
+        /// The site.
+        /// </value>
         public ISite Site
         {
             get

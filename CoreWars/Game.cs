@@ -223,7 +223,7 @@ namespace CoreWars
                     this.Players.Clear();
                     this.NewStandard = newStandard;
 
-                    this.Players = players;
+                    this.Players = new List<Player>(players);
                     for (int i = 0; i < Settings.MEMORYSIZE; i++)
                     {
                         Memory.Add(new Cell());

@@ -223,7 +223,9 @@ namespace CoreWars
                     noPlayer = true;
                     myNoGraphicForm = new NoGraphicForm();
                     myThisIsNotAForm = new ThisIsNotAForm(this);
-                    List<Engine.Simulator.Player> tempPlayers = new List<Engine.Simulator.Player>(players);
+                    List<Engine.Simulator.Player> tempPlayers = new List<Engine.Simulator.Player>();
+                    for (int i = 0; i < players.Count; ++i )
+                        tempPlayers.Add( new Engine.Simulator.Player(players[i]) );
                     if (standard == Engine.IO.Compiler.Standard._88)
                     {
                         Engine.Simulator.Game.GetGame.Initialize(tempPlayers, false);
