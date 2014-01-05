@@ -52,7 +52,7 @@ namespace CoreWars
                 {
                     MessageBox.Show("Bitte geben sie den Code für den Spieler ein.", "Kein Code vorhanden", MessageBoxButtons.OK);
                 }
-                else if (myGUI.listboxContains(textBox1.Text))
+                else if (isNewPlayer && myGUI.listboxContains(textBox1.Text))
                 {
                     MessageBox.Show("Dieser Spielername wird schon verwendet. Bitte geben sie einen anderen Namen für den Spieler ein.", "Name schon verwendet", MessageBoxButtons.OK);
                 }
@@ -85,7 +85,7 @@ namespace CoreWars
             {
                 try
                 {
-                    saveFileDialog1.FileName = Path.Combine(saveFileDialog1.InitialDirectory, textBox1.Text + ".txt");
+                    saveFileDialog1.FileName = Path.Combine(saveFileDialog1.InitialDirectory, textBox1.Text);
                     if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                     {
                         StreamWriter streamWriter = new StreamWriter(saveFileDialog1.FileName);

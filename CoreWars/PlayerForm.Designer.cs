@@ -128,11 +128,11 @@ namespace CoreWars
             // 
             // openFileDialog1
             // 
-            this.openFileDialog1.Filter = "Text-Dateien|*.txt";
+            this.openFileDialog1.Filter = "RedCode-Dateien|*.red|Text-Dateien|*.txt|Alle Dateien|*.*";
             // 
             // saveFileDialog1
             // 
-            this.saveFileDialog1.Filter = "Text-Dateien|*.txt";
+            this.saveFileDialog1.Filter = "RedCode-Dateien|*.red";
             // 
             // PlayerForm
             // 
