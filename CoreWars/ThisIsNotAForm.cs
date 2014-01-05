@@ -40,28 +40,16 @@ namespace CoreWars
             void myGUI_DrawRectangle(object sender, GUI.DrawRectangleEventArgs e)
             {
                 G.DrawRectangle(new Pen(e.color, 3), e.x, e.y, 3, 3);
-                pictureBox1.Refresh();
+                if (e.refresh)
+                {
+                    pictureBox1.Refresh();
+                }
+                //DateTime time = DateTime.Now;
+                //System.Diagnostics.Debug.WriteLine("" + time.Second + "." + time.Millisecond);
             }
 
             private void ThisIsNotAForm_Load(object sender, EventArgs e)
             {
-                for (int i = 0; i < myGUI.players.Count; i++)
-                {
-                    int j = Engine.Simulator.Settings.GetInitialPosition(i);
-                    for (int t = j; t < j + myGUI.players[i].Code.Count - 1; t++)
-                    {
-                        myGUI_DrawRectangle(this, new GUI.DrawRectangleEventArgs((t % xRectangles) * 7 + 5,
-                                              (((t - t % xRectangles) / xRectangles)) * 7 + 5, myGUI.colors[i]));
-                    }
-                }
-                /* for (int i = 0; i < myGUI.players.Count; i++)
-                 {
-                     for (int j = 0; j < myGUI.players[i].Code.Count-1; j++)
-                     {
-                         myGUI_DrawRectangle(this, new GUI.DrawRectangleEventArgs((e.CellIndex % myThisIsNotAForm.xRectangles) * 7 + 5,
-                                                                (((e.CellIndex - e.CellIndex % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5,myGUI.colors[i]));
-                     }
-                 }*/
             }
         }
     }

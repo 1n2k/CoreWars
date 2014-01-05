@@ -182,7 +182,7 @@
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "NoGraphicForm";
-            this.Text = "NoGraphicForm";
+            this.Text = "Der Core";
             this.Load += new System.EventHandler(this.NoGraphicForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);

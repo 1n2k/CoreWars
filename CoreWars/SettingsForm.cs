@@ -9,6 +9,13 @@ namespace CoreWars
 	{
 		public partial class SettingsForm : Form
 		{
+            bool redCross = true;
+            int initMemorySize;
+            int initMaxCoresPerPlayer;
+            int initMaxLength;
+            int initMaxCycles;
+            int initCodeDistance;
+            Engine.IO.Compiler.Standard initStandard;
 			bool initializing = true;
 			private GUI myGUI;
 			public SettingsForm(GUI _myGUI)
@@ -24,6 +31,13 @@ namespace CoreWars
 				textBox3.Text = "" + Engine.Simulator.Settings.MAXLENGTH;
 				textBox4.Text = "" + Engine.Simulator.Settings.MAXCYCLES;
 				textBox5.Text = "" + Engine.Simulator.Settings.CODEDISTANCE;
+                initMemorySize = Engine.Simulator.Settings.MEMORYSIZE;
+                initMaxCoresPerPlayer = Engine.Simulator.Settings.MAXCORESPERPLAYER;
+                initMaxLength = Engine.Simulator.Settings.MAXLENGTH;
+                initMaxCycles = Engine.Simulator.Settings.MAXCYCLES;
+                initCodeDistance = Engine.Simulator.Settings.CODEDISTANCE;
+                initStandard = myGUI.standard;
+
 				if (myGUI.standard == Engine.IO.Compiler.Standard._94)
 				{
 					radioButton2.Checked = true;
@@ -103,7 +117,46 @@ namespace CoreWars
 
 			void SettingsFormFormClosed(object sender, FormClosedEventArgs e)
 			{
-				myGUI.changedSettings();
+                if (redCross)
+                {
+                    if (DialogResult.Yes == MessageBox.Show("Möchten sie die Einstellungen so speichern? (Bei 'Nein' werden die alten Einstellungen genommen.)", "Einstellungen speichern", MessageBoxButtons.YesNo))
+                    {
+                        this.Close();
+                        myGUI.changedSettings();
+                    }
+                    else
+                    {
+                        Engine.Simulator.Settings.MEMORYSIZE = initMemorySize;
+                        Engine.Simulator.Settings.MAXCORESPERPLAYER = initMaxCoresPerPlayer;
+                        Engine.Simulator.Settings.MAXLENGTH = initMaxLength;
+                        Engine.Simulator.Settings.MAXCYCLES = initMaxCycles;
+                        Engine.Simulator.Settings.CODEDISTANCE = initCodeDistance;
+                        myGUI.standard = initStandard;
+                        textBox1.Text = "" + Engine.Simulator.Settings.MEMORYSIZE;
+                        textBox2.Text = "" + Engine.Simulator.Settings.MAXCORESPERPLAYER;
+                        textBox3.Text = "" + Engine.Simulator.Settings.MAXLENGTH;
+                        textBox4.Text = "" + Engine.Simulator.Settings.MAXCYCLES;
+                        textBox5.Text = "" + Engine.Simulator.Settings.CODEDISTANCE;
+                        initializing = true;
+                        if (myGUI.standard == Engine.IO.Compiler.Standard._94)
+                        {
+                            radioButton2.Checked = true;
+                            radioButton1.Checked = false;
+                        }
+                        else
+                        {
+                            radioButton2.Checked = false;
+                            radioButton1.Checked = true;
+                        }
+                        initializing = false;
+                        this.Close();
+                        myGUI.changedSettings();
+                    }
+                }
+                else
+                {
+                    myGUI.changedSettings();
+                }
 			}
 			
 			private void radioButton1_CheckedChanged(object sender, EventArgs e)
@@ -126,7 +179,7 @@ namespace CoreWars
 								}
 								myGUI.newPlayer(false, CoreWars.Engine.IO.Compiler.ParseCodeFile(code, myGUI.standard, oldPlayers[i].Name), i);
 							}
-							catch(InvalidOperationException ex){
+							catch(InvalidOperationException){
 								oldNotWorkingPlayers.Add(oldPlayers[i]);
 								oldNotWorkingPlayerIndices.Add(i);
 							}
@@ -176,7 +229,7 @@ namespace CoreWars
 								}
 								myGUI.newPlayer(false, CoreWars.Engine.IO.Compiler.ParseCodeFile(code, myGUI.standard, oldPlayers[i].Name), i);
 							}
-							catch(InvalidOperationException ex){
+							catch(InvalidOperationException){
 								oldNotWorkingPlayers.Add(oldPlayers[i]);
 								oldNotWorkingPlayerIndices.Add(i);
 							}
@@ -209,7 +262,35 @@ namespace CoreWars
 			private void button1_Click(object sender, EventArgs e)
 			{
 				this.Close();
+                redCross = false;
 			}
+
+            private void button2_Click(object sender, EventArgs e)
+            {
+                Engine.Simulator.Settings.MEMORYSIZE = initMemorySize;
+                Engine.Simulator.Settings.MAXCORESPERPLAYER = initMaxCoresPerPlayer;
+                Engine.Simulator.Settings.MAXLENGTH = initMaxLength;
+                Engine.Simulator.Settings.MAXCYCLES = initMaxCycles;
+                Engine.Simulator.Settings.CODEDISTANCE = initCodeDistance;
+                myGUI.standard = initStandard;
+                textBox1.Text = "" + Engine.Simulator.Settings.MEMORYSIZE;
+                textBox2.Text = "" + Engine.Simulator.Settings.MAXCORESPERPLAYER;
+                textBox3.Text = "" + Engine.Simulator.Settings.MAXLENGTH;
+                textBox4.Text = "" + Engine.Simulator.Settings.MAXCYCLES;
+                textBox5.Text = "" + Engine.Simulator.Settings.CODEDISTANCE;
+                initializing = true;
+                if (myGUI.standard == Engine.IO.Compiler.Standard._94)
+                {
+                    radioButton2.Checked = true;
+                    radioButton1.Checked = false;
+                }
+                else
+                {
+                    radioButton2.Checked = false;
+                    radioButton1.Checked = true;
+                }
+                initializing = false;
+            }
 		}
 	}
 }
