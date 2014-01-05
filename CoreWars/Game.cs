@@ -222,6 +222,7 @@ namespace CoreWars
                     this.Memory.Clear();
                     this.Players.Clear();
                     this.NewStandard = newStandard;
+                    this.TurnCount = 0;
 
                     this.Players = new List<Player>(players);
                     for (int i = 0; i < Settings.MEMORYSIZE; i++)

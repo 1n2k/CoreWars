@@ -69,8 +69,8 @@ namespace CoreWars
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message, "Es ist ein Fehler aufgetreten", MessageBoxButtons.OK);
-                        myGUI.changePlayer(index);
+                        MessageBox.Show("Ihr Programm ist fehlerhaft.\n" + ex.Message, "Es ist ein Fehler aufgetreten!", MessageBoxButtons.OK);
+                        //myGUI.changePlayer(index);
                     }
                     this.Close();
                 }
@@ -89,7 +89,7 @@ namespace CoreWars
                     if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                     {
                         StreamWriter streamWriter = new StreamWriter(saveFileDialog1.FileName);
-                        streamWriter.WriteLine(textBox1.Text);
+                        streamWriter.WriteLine(";name="+textBox1.Text);
                         streamWriter.Write(textBox2.Text);
                         streamWriter.Close();
                     }
@@ -109,8 +109,15 @@ namespace CoreWars
                         if (File.Exists(openFileDialog1.FileName))
                         {
                             StreamReader streamReader = new StreamReader(openFileDialog1.FileName);
-                            textBox1.Text = streamReader.ReadLine();
                             textBox2.Text = streamReader.ReadToEnd();
+                            foreach (var item in textBox2.Lines)
+                            {
+                                if (item.StartsWith(";author"))
+                                {
+                                    textBox1.Text = item.Split('=')[1];
+                                    break;
+                                }
+                            }
                             streamReader.Close();
                         }
                     }
