@@ -81,7 +81,22 @@ namespace CoreWars
                     List<Simulator.Cell> code = new List<Simulator.Cell>();
                     Dictionary<string, string> labels = new Dictionary<string, string>();
 
-                    for (int linenum = 0,cnt = 0; linenum < file.Length ; linenum++)
+                    int redcodestart = -1;
+                    for (int i = 0; i < file.Length; i++)
+                    {
+                        if (file[i].StartsWith(";redcode"))
+                        {
+                            if (file[i] == ";redcode-94" && standard != Standard._94)
+                                throw new InvalidOperationException("Der Code ist kein gültiger '88er Standard redcode File");
+                            redcodestart = i;
+                            break;
+                        }
+                    }
+
+                    if (redcodestart == -1)
+                        redcodestart = 0;
+
+                    for (int linenum = redcodestart,cnt = 0; linenum < file.Length ; linenum++)
                     {
                         string ac = file[linenum];
                         ac = ac.Replace('\t', ' ').Replace(", ", ",").TrimStart(' ').TrimEnd(' ');
@@ -94,7 +109,7 @@ namespace CoreWars
                             labels[ac.Split(':')[0]] = "" + (cnt ++);
                     }
 
-                    for (int linenum = 0; linenum < file.Length ; linenum++)
+                    for (int linenum = redcodestart; linenum < file.Length; linenum++)
                     {
                         string ac = file[linenum];
                         ac = ac.Replace('\t', ' ').Replace("\r","").Replace(", ", ",").TrimStart(' ').TrimEnd(' ');
