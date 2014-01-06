@@ -15,7 +15,9 @@ namespace CoreWars
         public partial class GUI : Form
         {
             //Testfarben
+            public List<Color> lightColors = new List<Color>();
             public List<Color> colors = new List<Color>();
+            public List<int> lastCell = new List<int>();
             //.....
 
             PlayerForm myPlayerForm;
@@ -35,11 +37,22 @@ namespace CoreWars
             {
                 InitializeComponent();
                 firstActivePlayer = -1;
-                colors.Add(Color.Blue);
-                colors.Add(Color.Red);
-                colors.Add(Color.Green);
-                colors.Add(Color.Orange);
-                colors.Add(Color.Magenta);
+                colors.Add(Color.DarkBlue);
+                colors.Add(Color.DarkRed);
+                colors.Add(Color.DarkGreen);
+                colors.Add(Color.DarkOrange);
+                colors.Add(Color.DarkTurquoise);
+                colors.Add(Color.DarkMagenta);
+                colors.Add(Color.DarkOrchid);
+                colors.Add(Color.DarkKhaki);
+                lightColors.Add(Color.Blue);
+                lightColors.Add(Color.Red);
+                lightColors.Add(Color.Green);
+                lightColors.Add(Color.Orange);
+                lightColors.Add(Color.Turquoise);
+                lightColors.Add(Color.Magenta);
+                lightColors.Add(Color.Orchid);
+                lightColors.Add(Color.Khaki);
             }
 
             private void GUI_Load(object sender, EventArgs e)
@@ -78,7 +91,13 @@ namespace CoreWars
                 {
                     MessageBox.Show("Der Spieler " + e.Object.Name + " ist gestorben.", "Spieler ist gestorben", MessageBoxButtons.OK);
                 }
-                alivePlayers.Remove(players.IndexOf(e.Object));
+                List<string> names = new List<string>();
+                for (int i = 0; i < players.Count; i++)
+                {
+                    names.Add(players[i].Name);
+                }
+                alivePlayers.Remove(names.IndexOf(e.Object.Name));
+                activePlayer--;
                 if (alivePlayers.Count == 1)
                 {
                     timer.Stop();
@@ -142,7 +161,7 @@ namespace CoreWars
                     if (!isStarterCell)
                     {
                         OnDrawRectangle(new DrawRectangleEventArgs((e.CellIndex % myThisIsNotAForm.xRectangles) * 7 + 5,
-                                                           (((e.CellIndex - e.CellIndex % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, Color.Black, false));
+                                                           (((e.CellIndex - e.CellIndex % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, Color.Gray, false));
                     }
                     Application.DoEvents();
                 }
@@ -152,12 +171,18 @@ namespace CoreWars
                     if (tempRefreshIndex % refreshLenght == 0)
                     {
                         OnDrawRectangle(new DrawRectangleEventArgs((e.CellIndex % myThisIsNotAForm.xRectangles) * 7 + 5,
-                                                                   (((e.CellIndex - e.CellIndex % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, colors[activePlayer], true));
+                                                                   (((e.CellIndex - e.CellIndex % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, lightColors[alivePlayers[activePlayer]], true));
+                        OnDrawRectangle(new DrawRectangleEventArgs((lastCell[alivePlayers[activePlayer]] % myThisIsNotAForm.xRectangles) * 7 + 5,
+                                                                   (((lastCell[alivePlayers[activePlayer]] - lastCell[activePlayer] % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, colors[alivePlayers[activePlayer]], true));
+                        lastCell[alivePlayers[activePlayer]] = e.CellIndex;
                     }
                     else
                     {
                         OnDrawRectangle(new DrawRectangleEventArgs((e.CellIndex % myThisIsNotAForm.xRectangles) * 7 + 5,
-                                                                   (((e.CellIndex - e.CellIndex % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, colors[activePlayer], false));
+                                                                   (((e.CellIndex - e.CellIndex % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, lightColors[alivePlayers[activePlayer]], false));
+                        OnDrawRectangle(new DrawRectangleEventArgs((lastCell[alivePlayers[activePlayer]] % myThisIsNotAForm.xRectangles) * 7 + 5,
+                                                                   (((lastCell[alivePlayers[activePlayer]] - lastCell[alivePlayers[activePlayer]] % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, colors[alivePlayers[activePlayer]], false));
+                        lastCell[activePlayer] = e.CellIndex;
                     }
                     tempRefreshIndex++;
                     Application.DoEvents();
@@ -215,13 +240,15 @@ namespace CoreWars
                     }
                     catch (Exception) { }
                     alivePlayers = new List<int>();
+                    lastCell = new List<int>();
                     for (int i = 0; i < players.Count; i++)
                     {
                         alivePlayers.Add(i);
+                        lastCell.Add(Engine.Simulator.Settings.GetInitialPosition(i));
                     }
                     activePlayer = firstActivePlayer;
                     noPlayer = true;
-                    myNoGraphicForm = new NoGraphicForm();
+                    myNoGraphicForm = new NoGraphicForm(this);
                     myThisIsNotAForm = new ThisIsNotAForm(this);
                     List<Engine.Simulator.Player> tempPlayers = new List<Engine.Simulator.Player>();
                     for (int i = 0; i < players.Count; ++i )
@@ -267,6 +294,7 @@ namespace CoreWars
                 }
                 else
                 {
+                    tempRefreshIndex = 0;
                     if (Engine.Simulator.Game.GetGame.SimulateNextTurn())
                     {
                         toolStripStatusLabel1.Text = Convert.ToInt32(toolStripStatusLabel1.Text) + 1 + "";
@@ -287,19 +315,19 @@ namespace CoreWars
 
             private void pauseGameButton_Click(object sender, EventArgs e) //Spiel pausieren
             {
+                pausiert = !pausiert;
                 if (!pausiert)
                 {
-                    timer.Stop();
-                    singleStepButton.Enabled = true;
+                    timer.Start();
+                    singleStepButton.Enabled = false;
                     pauseGameButton.Text = "Pause";
                 }
                 else
                 {
-                    timer.Start();
-                    singleStepButton.Enabled = false;
+                    timer.Stop();
+                    singleStepButton.Enabled = true;
                     pauseGameButton.Text = "Weiter";
                 }
-                pausiert = !pausiert;
                 startGameButton.Enabled = false;
                 stopGameButton.Enabled = true;
                 pauseGameButton.Enabled = true;

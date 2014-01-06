@@ -18,6 +18,7 @@ namespace CoreWars
             {
                 this.FormClosed += new FormClosedEventHandler(PlayerForm_FormClosed);
                 myGUI = GUI;
+                this.Icon = myGUI.Icon;
                 isNewPlayer = (player == null);
                 if (player == null)
                 {

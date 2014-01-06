@@ -19,6 +19,7 @@ namespace CoreWars
             {
                 InitializeComponent();
                 myGUI = _GUI;
+                this.Icon = myGUI.Icon;
                 myGUI.DrawRectangle += new GUI.DrawRectangleEventHandler(myGUI_DrawRectangle);
 
                 DoubleBuffered = true;
