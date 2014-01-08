@@ -90,7 +90,14 @@ namespace CoreWars
                     if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                     {
                         StreamWriter streamWriter = new StreamWriter(saveFileDialog1.FileName);
-                        streamWriter.WriteLine(";name="+textBox1.Text);
+                        bool containsname = false;
+                        foreach (var item in textBox2.Lines)
+                        {
+                            if(item.StartsWith(";name"))
+                                containsname = true;
+                        }
+                        if(!containsname)
+                            streamWriter.WriteLine(";name="+textBox1.Text);
                         streamWriter.Write(textBox2.Text);
                         streamWriter.Close();
                     }

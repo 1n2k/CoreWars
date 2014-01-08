@@ -433,6 +433,14 @@ namespace CoreWars
                 timer.Period = 1000 / trackBar1.Value;
                 refreshLenght = 1 + (trackBar1.Value / 225);
             }
+
+            private void GUI_FormClosing(object sender, FormClosingEventArgs e)
+            {
+                if (timer.IsRunning)
+                {
+                    timer.Stop();
+                }
+            }
         }
     }
 }
