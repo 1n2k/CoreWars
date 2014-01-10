@@ -85,7 +85,7 @@ namespace CoreWars
             {
                 if (e.Object.Name.ToLower().StartsWith("spieler"))
                 {
-                    MessageBox.Show("Der " + e.Object.Name + " ist gestorben.", "Spieler ist gestorben", MessageBoxButtons.OK);
+                    MessageBox.Show("Der Spieler " + e.Object.Name.Substring(7,e.Object.Name.Length-7) + " ist gestorben.", "Spieler ist gestorben", MessageBoxButtons.OK);
                 }
                 else
                 {
@@ -103,7 +103,7 @@ namespace CoreWars
                     timer.Stop();
                     if (players[alivePlayers[0]].Name.ToLower().StartsWith("spieler"))
                     {
-                        MessageBox.Show("Der " + players[alivePlayers[0]].Name + " hat gewonnen.", "Spieler hat gewonnen", MessageBoxButtons.OK);
+                        MessageBox.Show("Der Spieler " + players[alivePlayers[0]].Name.Substring(7, players[alivePlayers[0]].Name.Length) + " hat gewonnen.", "Spieler hat gewonnen", MessageBoxButtons.OK);
                     }
                     else
                     {
@@ -171,9 +171,9 @@ namespace CoreWars
                     if (tempRefreshIndex % refreshLenght == 0)
                     {
                         OnDrawRectangle(new DrawRectangleEventArgs((e.CellIndex % myThisIsNotAForm.xRectangles) * 7 + 5,
-                                                                   (((e.CellIndex - e.CellIndex % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, lightColors[alivePlayers[activePlayer]], true));
+                                                                   (((e.CellIndex - e.CellIndex % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, lightColors[alivePlayers[activePlayer]], false));
                         OnDrawRectangle(new DrawRectangleEventArgs((lastCell[alivePlayers[activePlayer]] % myThisIsNotAForm.xRectangles) * 7 + 5,
-                                                                   (((lastCell[alivePlayers[activePlayer]] - lastCell[activePlayer] % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, colors[alivePlayers[activePlayer]], true));
+                                                                   (((lastCell[alivePlayers[activePlayer]] - lastCell[alivePlayers[activePlayer]] % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, colors[alivePlayers[activePlayer]], true));
                         lastCell[alivePlayers[activePlayer]] = e.CellIndex;
                     }
                     else
@@ -182,7 +182,7 @@ namespace CoreWars
                                                                    (((e.CellIndex - e.CellIndex % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, lightColors[alivePlayers[activePlayer]], false));
                         OnDrawRectangle(new DrawRectangleEventArgs((lastCell[alivePlayers[activePlayer]] % myThisIsNotAForm.xRectangles) * 7 + 5,
                                                                    (((lastCell[alivePlayers[activePlayer]] - lastCell[alivePlayers[activePlayer]] % myThisIsNotAForm.xRectangles) / myThisIsNotAForm.xRectangles)) * 7 + 5, colors[alivePlayers[activePlayer]], false));
-                        lastCell[activePlayer] = e.CellIndex;
+                        lastCell[alivePlayers[activePlayer]] = e.CellIndex;
                     }
                     tempRefreshIndex++;
                     Application.DoEvents();
@@ -354,8 +354,16 @@ namespace CoreWars
 
             public void changePlayer(int index)
             {
-                myPlayerForm.Close();
-                myPlayerForm = new PlayerForm(this, index, players[index]);
+                myPlayerForm.Hide();
+                myPlayerForm.Dispose();
+                if (index == -1)
+                {
+                    myPlayerForm = new PlayerForm(this);
+                }
+                else
+                {
+                    myPlayerForm = new PlayerForm(this, index, players[index]);
+                }
                 myPlayerForm.ShowDialog();
             }
 

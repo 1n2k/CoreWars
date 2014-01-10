@@ -148,7 +148,7 @@
                 // 
                 // button1
                 // 
-                this.button1.Location = new System.Drawing.Point(93, 266);
+                this.button1.Location = new System.Drawing.Point(100, 266);
                 this.button1.Name = "button1";
                 this.button1.Size = new System.Drawing.Size(93, 23);
                 this.button1.TabIndex = 12;
@@ -160,14 +160,14 @@
                 // 
                 this.textBox1.Location = new System.Drawing.Point(8, 268);
                 this.textBox1.Name = "textBox1";
-                this.textBox1.Size = new System.Drawing.Size(79, 20);
+                this.textBox1.Size = new System.Drawing.Size(86, 20);
                 this.textBox1.TabIndex = 13;
                 // 
                 // NoGraphicForm
                 // 
                 this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
                 this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-                this.ClientSize = new System.Drawing.Size(194, 298);
+                this.ClientSize = new System.Drawing.Size(205, 298);
                 this.ControlBox = false;
                 this.Controls.Add(this.textBox1);
                 this.Controls.Add(this.button1);
@@ -186,7 +186,7 @@
                 this.MaximizeBox = false;
                 this.MinimizeBox = false;
                 this.Name = "NoGraphicForm";
-                this.Text = "Der Core";
+                this.Text = "Tabellarische Ansicht des Cores";
                 this.Load += new System.EventHandler(this.NoGraphicForm_Load);
                 ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
                 this.ResumeLayout(false);

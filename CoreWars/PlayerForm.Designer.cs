@@ -1,12 +1,4 @@
-﻿/*
- * Erstellt mit SharpDevelop.
- * Benutzer: robert
- * Datum: 09.12.2013
- * Zeit: 15:30
- * 
- * Sie können diese Vorlage unter Extras > Optionen > Codeerstellung > Standardheader ändern.
- */
-namespace CoreWars
+﻿namespace CoreWars
 {
     namespace GUI
     {
@@ -40,8 +32,8 @@ namespace CoreWars
             /// </summary>
             private void InitializeComponent()
             {
-                this.textBox1 = new System.Windows.Forms.TextBox();
-                this.textBox2 = new System.Windows.Forms.TextBox();
+                this.textbox2 = new System.Windows.Forms.TextBox();
+                this.textbox1 = new System.Windows.Forms.TextBox();
                 this.button1 = new System.Windows.Forms.Button();
                 this.button2 = new System.Windows.Forms.Button();
                 this.button3 = new System.Windows.Forms.Button();
@@ -59,24 +51,23 @@ namespace CoreWars
                 this.groupBox2.SuspendLayout();
                 this.SuspendLayout();
                 // 
-                // textBox1
+                // textbox1
                 // 
-                this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-                this.textBox1.Location = new System.Drawing.Point(3, 16);
-                this.textBox1.Name = "textBox1";
-                this.textBox1.Size = new System.Drawing.Size(271, 20);
-                this.textBox1.TabIndex = 1;
+                this.textbox1.Dock = System.Windows.Forms.DockStyle.Fill;
+                this.textbox1.Location = new System.Drawing.Point(3, 16);
+                this.textbox1.Name = "textbox1";
+                this.textbox1.Size = new System.Drawing.Size(271, 20);
+                this.textbox1.TabIndex = 1;
                 // 
-                // textBox2
+                // textbox2
                 // 
-                this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-                this.textBox2.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-                this.textBox2.Location = new System.Drawing.Point(3, 16);
-                this.textBox2.Multiline = true;
-                this.textBox2.Name = "textBox2";
-                this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-                this.textBox2.Size = new System.Drawing.Size(271, 281);
-                this.textBox2.TabIndex = 2;
+                this.textbox2.Dock = System.Windows.Forms.DockStyle.Fill;
+                this.textbox2.Location = new System.Drawing.Point(3, 16);
+                this.textbox2.Multiline = true;
+                this.textbox2.Name = "textbox2";
+                this.textbox2.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+                this.textbox2.Size = new System.Drawing.Size(271, 281);
+                this.textbox2.TabIndex = 2;
                 // 
                 // button1
                 // 
@@ -133,7 +124,7 @@ namespace CoreWars
                 // 
                 // groupBox1
                 // 
-                this.groupBox1.Controls.Add(this.textBox2);
+                this.groupBox1.Controls.Add(this.textbox2);
                 this.groupBox1.Controls.Add(this.button4);
                 this.groupBox1.Controls.Add(this.button3);
                 this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -164,7 +155,7 @@ namespace CoreWars
                 // 
                 // groupBox2
                 // 
-                this.groupBox2.Controls.Add(this.textBox1);
+                this.groupBox2.Controls.Add(this.textbox1);
                 this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
                 this.groupBox2.Location = new System.Drawing.Point(0, 0);
                 this.groupBox2.Name = "groupBox2";
@@ -198,8 +189,8 @@ namespace CoreWars
                 this.ResumeLayout(false);
 
             }
-            private System.Windows.Forms.TextBox textBox1;
-            private System.Windows.Forms.TextBox textBox2;
+            private System.Windows.Forms.TextBox textbox2;
+            private System.Windows.Forms.TextBox textbox1;
             private System.Windows.Forms.Button button1;
             private System.Windows.Forms.Button button2;
             private System.Windows.Forms.Button button3;

@@ -55,7 +55,7 @@
                 this.MaximizeBox = false;
                 this.MinimizeBox = false;
                 this.Name = "ThisIsNotAForm";
-                this.Text = "Core";
+                this.Text = "Graphische Ansicht des Cores";
                 ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
                 this.ResumeLayout(false);
 
