@@ -151,6 +151,10 @@ namespace CoreWars
                     Modifier = modifier;
                 }
 
+                //Copy constructor for Cells with at max 2 Arguments
+                public Cell(Cell c)
+                    : this(c.Operation, c.Arguments[0], c.Arguments[1]) { }
+
                 /// <summary>
                 /// Returns a <see cref="System.String"/> that represents the current <see cref="CoreWars.Engine.Cell"/>.
                 /// </summary>

@@ -285,7 +285,7 @@ namespace CoreWars
                     get { return Memory[index]; }
                     set
                     {
-                        Memory[index] = value;
+                        Memory[index] = new Cell(value);
                         OnMemoryCellChange(new MemoryCellChangedEventArgs(index));
                     }
                 }

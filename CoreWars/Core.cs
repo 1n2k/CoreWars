@@ -48,36 +48,36 @@ namespace CoreWars
                     //Normalise A-Field
                     int AField = (this.Position + game[this.Position].Arguments[0].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
                     if (game[this.Position].Arguments[0].Specifier == '@')
-                        AField = (this.Position + game[AField].Arguments[1].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
+                        AField += (game[AField].Arguments[1].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
                     else if (game[this.Position].Arguments[0].Specifier == '<')
-                        AField = (this.Position -1 + game[AField].Arguments[1].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
+                        AField += (--game[AField].Arguments[1].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
                     //'94Std:
                     else if (game[this.Position].Arguments[0].Specifier == '{')
-                        AField = (this.Position - 1 + game[AField].Arguments[0].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
+                        AField += (--game[AField].Arguments[0].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
                     else if (game[this.Position].Arguments[0].Specifier == '>')
-                        AField = (this.Position + game[AField].Arguments[1].Value+1 + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
+                        AField += (game[AField].Arguments[1].Value++ + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
                     else if (game[this.Position].Arguments[0].Specifier == '}')
-                        AField = (this.Position + game[AField].Arguments[0].Value+1 + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
+                        AField += (game[AField].Arguments[0].Value++ + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
 
                     else if (game[this.Position].Arguments[0].Specifier == '*')
-                        AField = (this.Position + game[AField].Arguments[0].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
+                        AField += (game[AField].Arguments[0].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
 
                     //Normalise B-Field
                     int BField = (this.Position + game[this.Position].Arguments[1].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
                     if (game[this.Position].Arguments[1].Specifier == '@')
-                        BField = (this.Position + game[BField].Arguments[1].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
+                        BField += (  game[BField].Arguments[1].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
                     else if (game[this.Position].Arguments[1].Specifier == '<')
-                        BField = (this.Position - 1 +game[BField].Arguments[1].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
+                        BField += (--game[BField].Arguments[1].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
                     //'94Std:
-                    else if (game[this.Position].Arguments[0].Specifier == '{')
-                        BField = (this.Position - 1 +game[BField].Arguments[0].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
-                    else if (game[this.Position].Arguments[0].Specifier == '>')
-                        BField = (this.Position + game[BField].Arguments[1].Value+1 + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
-                    else if (game[this.Position].Arguments[0].Specifier == '}')
-                        BField = (this.Position + game[BField].Arguments[0].Value+1 + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
+                    else if (game[this.Position].Arguments[1].Specifier == '{')
+                        BField += (--game[BField].Arguments[0].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
+                    else if (game[this.Position].Arguments[1].Specifier == '>')
+                        BField += (game[BField].Arguments[1].Value++ + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
+                    else if (game[this.Position].Arguments[1].Specifier == '}')
+                        BField += (game[BField].Arguments[0].Value++ + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
 
-                    else if (game[this.Position].Arguments[0].Specifier == '*')
-                        BField = (this.Position + game[BField].Arguments[0].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
+                    else if (game[this.Position].Arguments[1].Specifier == '*')
+                        BField += (game[BField].Arguments[0].Value + Settings.MEMORYSIZE) % Settings.MEMORYSIZE;
 
                     //System.Diagnostics.Debug.WriteLine("AField {0}, BField {1}, @Position {2}", AField, BField, this.Position);
 

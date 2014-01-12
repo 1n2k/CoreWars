@@ -53,15 +53,26 @@ namespace CoreWars
             {
                 if (textbox1.Text == "")
                 {
-                    MessageBox.Show("Bitte geben sie einen Namen für den Spieler ein.", "Kein Name vorhanden", MessageBoxButtons.OK);
+                    if (!Engine.Simulator.Settings.Tan)
+                        MessageBox.Show("Bitte geben sie einen Namen für den Spieler ein.", "Kein Name vorhanden", MessageBoxButtons.OK);
+                    else
+                        MessageBox.Show("Don't wanna have a name, little fish?", "Hey! I need to name you...", MessageBoxButtons.OK);
                 }
                 else if (textbox2.Text.Replace(" ", "").Replace("\n", "").Replace("\r", "") == "")
                 {
-                    MessageBox.Show("Bitte geben sie den Code für den Spieler ein.", "Kein Code vorhanden", MessageBoxButtons.OK);
+                    if (!Engine.Simulator.Settings.Tan)
+                        MessageBox.Show("Bitte geben sie den Code für den Spieler ein.", "Kein Code vorhanden", MessageBoxButtons.OK);
+                    else
+                        MessageBox.Show("Huh? No work for me?", "EMPTY?!", MessageBoxButtons.OK);
                 }
                 else if (isNewPlayer && myGUI.listboxContains(textbox1.Text))
                 {
-                    MessageBox.Show("Dieser Spielername wird schon verwendet. Bitte geben sie einen anderen Namen für den Spieler ein.", "Name schon verwendet", MessageBoxButtons.OK);
+                    if (!Engine.Simulator.Settings.Tan)
+                        MessageBox.Show("Dieser Spielername wird schon verwendet. Bitte geben sie einen anderen Namen für den Spieler ein.",
+                            "Name schon verwendet", MessageBoxButtons.OK);
+                    else
+                        MessageBox.Show("Hm. I already know about him. Did ya mean somethin' else?",
+                            "Every fish is unique...", MessageBoxButtons.OK);
                 }
                 else
                 {
@@ -69,14 +80,20 @@ namespace CoreWars
                     {
                         myGUI.newPlayer(isNewPlayer, CoreWars.Engine.IO.Compiler.ParseCodeFile(textbox2.Text.Split('\n'), myGUI.standard, textbox1.Text), index);
                     }
-                    catch (InvalidOperationException)
+                    catch (InvalidOperationException ex)
                     {
-                        MessageBox.Show("Der Code des Spielers " + myPlayer.Name + " ist nicht mit dem ausgewählten Standard kompatibel. Bitte korrigieren sie den Code dieses Spielers.", "Fehler beim Erstellen eines neuen Spielers", MessageBoxButtons.OK);
-                        myGUI.changePlayer(index);
+                        if(!Engine.Simulator.Settings.Tan)
+                            MessageBox.Show("Der Code des Spielers " + myPlayer.Name
+                                + " ist nicht mit dem ausgewählten Standard kompatibel.\nBitte korrigieren sie den Code dieses Spielers.",
+                                "Fehler beim Erstellen eines neuen Spielers", MessageBoxButtons.OK);
+                        else
+                            MessageBox.Show(ex.Message, "Ooops. She crashed!", MessageBoxButtons.OK);
+                        //myGUI.changePlayer(index);
+                        needCorrection = true;
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Ihr Programm ist fehlerhaft.\n" + ex.Message, "Es ist ein Fehler aufgetreten!", MessageBoxButtons.OK);
+                        MessageBox.Show("Ihr Programm ist fehlerhaft:\n" + ex.Message, "Ooops. She crashed!", MessageBoxButtons.OK);
                         //myGUI.changePlayer(index);
                         needCorrection = true;
                     }
@@ -127,9 +144,14 @@ namespace CoreWars
                             textbox2.Text = streamReader.ReadToEnd();
                             foreach (var item in textbox2.Lines)
                             {
-                                if (item.StartsWith(";author"))
+                                if (item.StartsWith(";author") && item.Contains("="))
                                 {
                                     textbox1.Text = item.Split('=')[1];
+                                    break;
+                                }
+                                else if (item.StartsWith(";author"))
+                                {
+                                    textbox1.Text = item.Replace(";author","").TrimStart(' ');
                                     break;
                                 }
                             }

@@ -87,7 +87,7 @@ namespace CoreWars
                         if (file[i].StartsWith(";redcode"))
                         {
                             if (file[i] == ";redcode-94" && standard != Standard._94)
-                                throw new InvalidOperationException("Der Code ist kein gültiger '88er Standard redcode File");
+                                throw new InvalidOperationException("FRIED SQUID!\nDunno the difference between '88 and '94?!");
                             redcodestart = i;
                             break;
                         }
@@ -148,7 +148,7 @@ namespace CoreWars
                         if (ac[i] == '.')
                         {
                             if (standard != Standard._94)
-                                throw new InvalidOperationException("You're stupid! This file is not a valid '88 standard RedCode file!");
+                                throw new InvalidOperationException("You sicko!\nYou didn't actually TRY to tell me that THIS is a valid '88 standard RedCode file, did you?!");
                             ++i;
                             modifier += ac[i++];
                             if (ac[i++] != ' ')
@@ -171,6 +171,9 @@ namespace CoreWars
                                 argument[o].Specifier = ac[i];
                             else
                             {
+                                if (!Char.IsDigit(ac[i]) && ac[i] != '-')
+                                    throw new InvalidOperationException("SQUID SALAD!\nAn invalid adressing thingy occured...");
+
                                 argument[o].Specifier = '$';
                                 --i;
                             }
@@ -195,8 +198,13 @@ namespace CoreWars
                         {
                             startIndex = argument[0].Value;
                             continue;
+                        } 
+                        if (operation == "end")
+                        {
+                            startIndex = argument[0].Value;
+                            break;
                         }
-                        if(operation == "EQU")
+                        if(operation == "equ")
                             continue;
                         //System.Diagnostics.Debug.WriteLine(new Simulator.Cell(operation, argument[0], argument[1]).ToString());
                         code.Add(new Simulator.Cell(operation.ToUpper(), argument[0], argument[1]));
