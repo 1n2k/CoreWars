@@ -13,11 +13,13 @@ namespace CoreWars
             int index;
             GUI myGUI;
             Engine.Simulator.Player myPlayer;
+            bool needCorrection;
 
             public PlayerForm(GUI GUI, int _index = -1, Engine.Simulator.Player player = null)
             {
                 this.FormClosed += new FormClosedEventHandler(PlayerForm_FormClosed);
                 myGUI = GUI;
+                this.Icon = myGUI.Icon;
                 isNewPlayer = (player == null);
                 if (player == null)
                 {
@@ -31,28 +33,33 @@ namespace CoreWars
 
             void PlayerForm_FormClosed(object sender, FormClosedEventArgs e)
             {
+                if (needCorrection)
+                {
+                    myGUI.changePlayer(index);
+                }
             }
 
             private void PlayerForm_Load(object sender, EventArgs e)
             {
-                textBox1.Text = myPlayer.Name;
+                needCorrection = false;
                 foreach (Engine.Simulator.Cell cell in myPlayer.Code)
                 {
-                    textBox2.Text += cell.ToString() + "\r\n";
+                    textbox2.Text += cell.ToString() + "\r\n";
                 }
+                textbox1.Text = myPlayer.Name;
             }
 
             private void button1_Click(object sender, EventArgs e)      //Ok
             {
-                if (textBox1.Text == "")
+                if (textbox1.Text == "")
                 {
                     MessageBox.Show("Bitte geben sie einen Namen für den Spieler ein.", "Kein Name vorhanden", MessageBoxButtons.OK);
                 }
-                else if (textBox2.Text.Replace(" ", "").Replace("\n", "").Replace("\r", "") == "")
+                else if (textbox2.Text.Replace(" ", "").Replace("\n", "").Replace("\r", "") == "")
                 {
                     MessageBox.Show("Bitte geben sie den Code für den Spieler ein.", "Kein Code vorhanden", MessageBoxButtons.OK);
                 }
-                else if (isNewPlayer && myGUI.listboxContains(textBox1.Text))
+                else if (isNewPlayer && myGUI.listboxContains(textbox1.Text))
                 {
                     MessageBox.Show("Dieser Spielername wird schon verwendet. Bitte geben sie einen anderen Namen für den Spieler ein.", "Name schon verwendet", MessageBoxButtons.OK);
                 }
@@ -60,7 +67,7 @@ namespace CoreWars
                 {
                     try
                     {
-                        myGUI.newPlayer(isNewPlayer, CoreWars.Engine.IO.Compiler.ParseCodeFile(textBox2.Text.Split('\n'), myGUI.standard, textBox1.Text), index);
+                        myGUI.newPlayer(isNewPlayer, CoreWars.Engine.IO.Compiler.ParseCodeFile(textbox2.Text.Split('\n'), myGUI.standard, textbox1.Text), index);
                     }
                     catch (InvalidOperationException)
                     {
@@ -71,6 +78,7 @@ namespace CoreWars
                     {
                         MessageBox.Show("Ihr Programm ist fehlerhaft.\n" + ex.Message, "Es ist ein Fehler aufgetreten!", MessageBoxButtons.OK);
                         //myGUI.changePlayer(index);
+                        needCorrection = true;
                     }
                     this.Close();
                 }
@@ -85,12 +93,19 @@ namespace CoreWars
             {
                 try
                 {
-                    saveFileDialog1.FileName = Path.Combine(saveFileDialog1.InitialDirectory, textBox1.Text);
+                    saveFileDialog1.FileName = Path.Combine(saveFileDialog1.InitialDirectory, textbox1.Text);
                     if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                     {
                         StreamWriter streamWriter = new StreamWriter(saveFileDialog1.FileName);
-                        streamWriter.WriteLine(";name="+textBox1.Text);
-                        streamWriter.Write(textBox2.Text);
+                        bool containsname = false;
+                        foreach (var item in textbox2.Lines)
+                        {
+                            if(item.StartsWith(";name"))
+                                containsname = true;
+                        }
+                        if(!containsname)
+                            streamWriter.WriteLine(";name="+textbox1.Text);
+                        streamWriter.Write(textbox2.Text);
                         streamWriter.Close();
                     }
                 }
@@ -109,12 +124,12 @@ namespace CoreWars
                         if (File.Exists(openFileDialog1.FileName))
                         {
                             StreamReader streamReader = new StreamReader(openFileDialog1.FileName);
-                            textBox2.Text = streamReader.ReadToEnd();
-                            foreach (var item in textBox2.Lines)
+                            textbox2.Text = streamReader.ReadToEnd();
+                            foreach (var item in textbox2.Lines)
                             {
                                 if (item.StartsWith(";author"))
                                 {
-                                    textBox1.Text = item.Split('=')[1];
+                                    textbox1.Text = item.Split('=')[1];
                                     break;
                                 }
                             }

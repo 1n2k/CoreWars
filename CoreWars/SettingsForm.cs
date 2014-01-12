@@ -21,6 +21,7 @@ namespace CoreWars
 			public SettingsForm(GUI _myGUI)
 			{
 				this.myGUI = _myGUI;
+                this.Icon = myGUI.Icon;
 				InitializeComponent();
 			}
 
