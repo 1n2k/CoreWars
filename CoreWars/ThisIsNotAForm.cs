@@ -48,6 +48,10 @@ namespace CoreWars
                 //DateTime time = DateTime.Now;
                 //System.Diagnostics.Debug.WriteLine("" + time.Second + "." + time.Millisecond);
             }
+            
+            public void refresh(){
+            	pictureBox1.Refresh();
+            }
 
             private void ThisIsNotAForm_Load(object sender, EventArgs e)
             {

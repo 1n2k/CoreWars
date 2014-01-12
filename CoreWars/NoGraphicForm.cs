@@ -24,11 +24,17 @@ namespace CoreWars
 
             private void NoGraphicForm_Load(object sender, EventArgs e)
             {
+            	Engine.Simulator.Game.GetGame.MemoryCellChanged += new Engine.Simulator.MemoryCellChangedEventHandler(Engine_Simulator_MemoryCellChangedEventHandler);
                 trackBar1.Maximum = Engine.Simulator.Settings.MEMORYSIZE - 1;
                 trackBar1.Minimum = 0;
                 trackBar1.Value = Engine.Simulator.Settings.MEMORYSIZE - 1;
                 textBox1.Text = 0 + "";
                 currentValue = 0;
+            }
+
+            void Engine_Simulator_MemoryCellChangedEventHandler(object sender, Engine.Simulator.MemoryCellChangedEventArgs e)
+            {
+            	changeLabels();
             }
 
             private void button1_Click(object sender, EventArgs e)
